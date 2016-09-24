@@ -31,7 +31,16 @@ function VersatilePCP() {
   * @method draw
   */
 VersatilePCP.prototype.draw = function() {
+	let _this = this;
+
 	let width, height;
+
+	let margin = {
+		top: 50,
+		bottom: 20,
+		left: 20,
+		right: 20
+	};
 
 	if(!this.plotSize) {
 		// get size from target element
@@ -75,12 +84,12 @@ VersatilePCP.prototype.draw = function() {
 				axesSpec.push(axisObject);
 			});
 
-
-			console.log(axesSpec);
-
 		} else {
 			// use the custom axes
+			axesSpec = this.plotAxes;
 		}
+
+		drawAxes(axesSpec);
 
 	} else {
 		throw "VersatilePCP: Data not found";
@@ -100,11 +109,47 @@ VersatilePCP.prototype.draw = function() {
 		} else if (type === "ordinal") {
 			return data.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
 		}
-
 	}
 
-	function drawAxes() {
+	function drawAxes(axes) {
+		axes.forEach((el) => {
+			let scale;
 
+			if (el.type === "linear") {
+				scale = d3.scaleLinear()
+					.domain(el.domain)
+					.range([height - margin.bottom, margin.top])
+
+				el.axisCall = d3.axisLeft(scale)
+					.ticks(10);
+
+			} else if (el.type === "ordinal") {
+				let range = el.domain.map((d, i) => {
+					return (height - margin.bottom) - (i * (height - margin.bottom - margin.top) / (el.domain.length - 1));
+				});
+
+				scale = d3.scaleOrdinal()
+					.domain(el.domain)
+					.range(range);
+
+				el.axisCall = d3.axisLeft(scale)
+					.ticks(el.domain.length);
+					// .tickValues(el.domain);
+			}
+		});
+
+		let axisSpacing = (width - margin.left - margin.right) / (axes.length - 1);
+
+		_this.svg.selectAll(".pcp-axis")
+			.data(axes).enter()
+		.append("g")
+			.attr("class", "pcp-axis")
+			.attr("transform", (d, i) => {
+				return "translate(" + (margin.left + axisSpacing * i) + ", 0)";
+			})
+			.each((d, i, nodes) => {
+				d.axisCall(d3.select(nodes[i]));
+			});
 	}
 
 	return this;
@@ -131,13 +176,7 @@ VersatilePCP.prototype.data = function(data) {
 VersatilePCP.prototype.axes = function(axes) {
 	// axes must be array of data structure of this type
 
-	if (!axes) {
-		// if the new axes aren't specified, revert back to all axes
-		this.plotAxes = null;
-	} else {
-		// otherwise set plotAxes to be axes specified
-		this.plotAxes = axes;
-	}
+	this.plotAxes = axes || null;
 
 	return this;
 };
@@ -151,13 +190,7 @@ VersatilePCP.prototype.axes = function(axes) {
 VersatilePCP.prototype.target = function(targetID) {
 	let oldTarget = this.plotTarget;
 
-	if (!targetID) {
-		// if new targetID is not specified, default to body
-		this.plotTarget = "body";
-	} else {
-		// otherwise set target to be new targetID
-		this.plotTarget = targetID;
-	}
+	this.plotTarget = targetID || "body";
 
 	if(this.svg && oldTarget !== this.plotTarget) {
 		// if the target has changed, remove the svg from the old location
@@ -176,11 +209,7 @@ VersatilePCP.prototype.target = function(targetID) {
   * @param size			The {width: w, height: h} for the plots
   */
 VersatilePCP.prototype.size = function(size) {
-	if (!size) {
-		this.plotSize = null;
-	} else {
-		this.plotSize = size;
-	}
+	this.plotSize = size || null;
 
 	return this;
 }
@@ -205,13 +234,7 @@ VersatilePCP.prototype.brushable = function(brushable) {
 	* @param color 			Function defining how to color each line
   */
 VersatilePCP.prototype.color = function(color) {
-	if (!color) {
-		// if new targetID is not specified, default to body
-		this.colorFunc = function(d, i) { return "lightblue"; };
-	} else {
-		// otherwise set target to be new targetID
-		this.colorFunc = color;
-	}
+	this.colorFunc = color || function(d, i) { return "lightblue"; };
 
 	return this;
 }
