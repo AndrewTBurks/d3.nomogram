@@ -12,17 +12,11 @@
   * @constructor
   */
 
-class ClassName {
-	constructor() {
-
-	}
-}
-
 function VersatilePCP() {
-	this.plotData = {};
+	this.plotData = null;
 
 	this.colorFunc = function(d, i) { return "lightblue"; };
-	this.plotAxes = {};
+	this.plotAxes = null;
 
 	this.isBrushable = false;
 
@@ -62,6 +56,52 @@ VersatilePCP.prototype.draw = function() {
 		.attr("height", height);
 
 	// draw pcp
+	if (this.plotData && this.plotData.length > 0) {
+		// don't draw if there is no data...
+		let axesSpec = [];
+
+		if(!this.plotAxes) {
+			// define all axes
+			let props = Object.keys(this.plotData[0]);
+
+			props.forEach((key) => {
+				let axisObject = {
+					name: key,
+					type: getAxisScaleType(this.plotData[0][key])
+				};
+
+				axisObject.domain = calculateAxisExtent(this.plotData.map(el => el[key]), axisObject.type);
+
+				axesSpec.push(axisObject);
+			});
+
+
+			console.log(axesSpec);
+
+		} else {
+			// use the custom axes
+		}
+
+	} else {
+		throw "VersatilePCP: Data not found";
+	}
+
+	function getAxisScaleType(val) {
+		if (typeof val === "number") {
+			return "linear";
+		} else if (typeof val === "string") {
+			return "ordinal";
+		}
+	}
+
+	function calculateAxisExtent(data, type) {
+		if (type === "linear") {
+			return d3.extent(data);
+		} else if (type === "ordinal") {
+			return data.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+		}
+
+	}
 
 	function drawAxes() {
 
@@ -89,6 +129,8 @@ VersatilePCP.prototype.data = function(data) {
   * @param axes       An array of axes to be used
   */
 VersatilePCP.prototype.axes = function(axes) {
+	// axes must be array of data structure of this type
+
 	if (!axes) {
 		// if the new axes aren't specified, revert back to all axes
 		this.plotAxes = null;
@@ -107,7 +149,7 @@ VersatilePCP.prototype.axes = function(axes) {
   * @param targetID			The ID of the pcp drawing target location
   */
 VersatilePCP.prototype.target = function(targetID) {
-	var oldTarget = this.plotTarget;
+	let oldTarget = this.plotTarget;
 
 	if (!targetID) {
 		// if new targetID is not specified, default to body
