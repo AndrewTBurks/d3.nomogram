@@ -1,0 +1,29 @@
+{
+  "name": "VersatilePCP",
+  "version": "0.1.0",
+	"main": "VersatilePCP.js",
+  "description": "VersatilePCP: Highly customizable SVG-Based Parallel Coordinate Plots library.",
+  "keywords": [
+    "d3",
+    "visualization",
+    "parallel coordinates"
+  ],
+  "homepage": "https://github.com/AndrewTBurks/VersatilePCP",
+  "author": {
+    "name": "Andrew Burks",
+    "url": "https://github.com/AndrewTBurks"
+  },
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AndrewTBurks/VersatilePCP.git"
+  },
+  "dependencies": {
+      "d3": "4.0"
+  },
+  "licenses": [
+    {
+      "url": "https://github.com/AndrewTBurks/VersatilePCP/blob/master/LICENSE"
+    }
+  ]
+}
