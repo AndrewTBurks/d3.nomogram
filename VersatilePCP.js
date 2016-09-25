@@ -326,6 +326,13 @@ VersatilePCP.prototype.color = function(color) {
 	return this;
 }
 
+/**
+  * Set a method or width for each pcp line stroke-width based on data and
+	* index of line
+  *
+  * @method strokeWidth
+	* @param width			Value or function defining how wide each line is
+  */
 VersatilePCP.prototype.strokeWidth = function(width) {
 	if (width) {
 		this.strokeSize = width;
@@ -336,6 +343,13 @@ VersatilePCP.prototype.strokeWidth = function(width) {
 	return this;
 }
 
+/**
+  * Set a method or value for each pcp line opacity based on data and
+	* index of line
+  *
+  * @method opacity
+	* @param opacity			Value or function defining how opaque each line is
+  */
 VersatilePCP.prototype.opacity = function(opacity) {
 	if (opacity) {
 		this.defaultOpacity = opacity;
@@ -346,6 +360,14 @@ VersatilePCP.prototype.opacity = function(opacity) {
 	return this;
 }
 
+/**
+  * Set a method or value for each pcp line opacity based on data and
+	* index of line when filter is applied to lines
+	* This is the opacity of lines which are outside of the filter
+  *
+  * @method opacity
+	* @param opacity			Value or function defining how opaque each line is when filter applied
+  */
 VersatilePCP.prototype.filteredOpacity = function(opacity) {
 	if (opacity) {
 		this.filteredItemOpacity = opacity;
