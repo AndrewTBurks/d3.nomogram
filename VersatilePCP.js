@@ -338,7 +338,7 @@ VersatilePCP.prototype.data = function(data) {
 /**
   * Set the axes of the data that will be drawn
   *
-  * @method axes
+  * @method setAxes
   * @param axes       An array of axes to be used
 	* @param mode 			The mode which the custom axes is using "alter" or "reduce"
   */
