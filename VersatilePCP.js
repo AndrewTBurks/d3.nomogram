@@ -349,7 +349,7 @@ VersatilePCP.prototype.data = function(data) {
   *
   * @method setAxes
   * @param {array} [axes = null] - An array of axes to be used
-	* @param {string} [mode = "reduce"] - The mode which the custom axes is using "alter" or "reduce"
+	* @param {string} [mode = reduce] - The mode which the custom axes is using "alter" or "reduce"
   */
 VersatilePCP.prototype.setAxes = function(axes, mode) {
 	// axes must be array of objects of this type
@@ -374,7 +374,7 @@ VersatilePCP.prototype.setAxes = function(axes, mode) {
   * Set the target element which the SVG will be appended to for drawing
   *
   * @method target
-  * @param {string} [targetID = "body"] - The ID of the pcp drawing target location
+  * @param {string} [targetID = body] - The ID of the pcp drawing target location
   */
 VersatilePCP.prototype.target = function(targetID) {
 	let oldTarget = this.plotTarget;

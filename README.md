@@ -79,7 +79,7 @@ Set the axes of the data that will be drawn
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [axes] | <code>array</code> | <code></code> | An array of axes to be used |
-| [mode] | <code>string</code> | <code>&quot;\&quot;reduce\&quot;&quot;</code> | The mode which the custom axes is using "alter" or "reduce" |
+| [mode] | <code>string</code> | <code>&quot;reduce&quot;</code> | The mode which the custom axes is using "alter" or "reduce" |
 
 <a name="target"></a>
 
@@ -90,7 +90,7 @@ Set the target element which the SVG will be appended to for drawing
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [targetID] | <code>string</code> | <code>&quot;\&quot;body\&quot;&quot;</code> | The ID of the pcp drawing target location |
+| [targetID] | <code>string</code> | <code>&quot;body&quot;</code> | The ID of the pcp drawing target location |
 
 <a name="size"></a>
 
