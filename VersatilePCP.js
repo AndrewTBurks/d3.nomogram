@@ -48,8 +48,8 @@ VersatilePCP.prototype.draw = function() {
 	let margin = {
 		top: 50,
 		bottom: 20,
-		left: 20,
-		right: 20
+		left: 30,
+		right: 30
 	};
 
 	let axesSpec = [];
@@ -214,6 +214,15 @@ VersatilePCP.prototype.draw = function() {
 				return "translate(" + (margin.left + axisSpacing * i) + ", 0)";
 			})
 			.each((d, i, nodes) => {
+				d3.select(nodes[i]).append("text")
+					.text(d.name)
+					.attr("y", margin.top - 12)
+					.style("font-size", 14)
+					.style("font-family", "sans-serif")
+					.style("font-weight", "bold")
+					.style("text-anchor", "middle")
+					.style("fill", "black");
+
 				d.axisCall(d3.select(nodes[i]));
 			});
 

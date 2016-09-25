@@ -1,33 +1,33 @@
 var myData = [
 	{
-		a: 1,
-		b: 2,
-		c: "hello",
-		d: 6
+		Thing1: 1,
+		Thing2: 2,
+		Word1: "hello",
+		Thing3: 6
 	},
 	{
-		a: 3,
-		b: 2,
-		c: "yes",
-		d: 4
+		Thing1: 3,
+		Thing2: 2,
+		Word1: "yes",
+		Thing3: 4
 	},
 	{
-		a: 4,
-		b: 1,
-		c: "hello",
-		d: 2
+		Thing1: 4,
+		Thing2: 1,
+		Word1: "hello",
+		Thing3: 2
 	},
 	{
-		a: 10,
-		b: -3,
-		c: "wow",
-		d: -1
+		Thing1: 10,
+		Thing2: -3,
+		Word1: "wow",
+		Thing3: -1
 	},
 	{
-		a: 8,
-		b: -4,
-		c: "Chihua",
-		d: 5
+		Thing1: 8,
+		Thing2: -4,
+		Word1: "Chihua",
+		Thing3: 5
 	}
 ];
 
@@ -40,11 +40,11 @@ var myPCP = new VersatilePCP()
 	})
 	.setAxes([
 		{
-			name: "a",
+			name: "Thing1",
 			rangeShrink: [0.25, 0.5]
 		},
 		{
-			name: "c",
+			name: "Word1",
 			rangeShrink: [0.5, 0.9]
 		}
 	],
