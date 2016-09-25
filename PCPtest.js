@@ -35,10 +35,13 @@ var myPCP = new VersatilePCP()
 	.data(myData)
 	.target("#myDiv")
 	.size({
-		width: 500,
-		height: 200
+		width: 1000,
+		height: 400
 	})
 	.color("red")
+	.opacity(0.6)
+	.strokeWidth(5)
+	.brushable(true)
 	.draw();
 
 console.log(myPCP);

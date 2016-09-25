@@ -16,12 +16,21 @@ function VersatilePCP() {
 	this.plotData = null;
 
 	this.colorFunc = function(d, i) { return "lightblue"; };
+	this.defaultOpacity = 1;
+	this.strokeSize = 1;
+
 	this.plotAxes = null;
 
 	this.isBrushable = false;
+	this.filters = {}; // filters used if brushing is enabled
+	this.filteredItemOpacity = 0.1;
 
 	this.plotTarget = "body";
 	this.svg = null;
+
+	this.axes = null;
+	this.lines = null;
+
 	this.plotSize = null;
 }
 
@@ -42,6 +51,11 @@ VersatilePCP.prototype.draw = function() {
 		right: 20
 	};
 
+	let axesSpec = [];
+	let axesScales = {};
+
+	let axisSpacing;
+
 	if(!this.plotSize) {
 		// get size from target element
 		width = d3.select(this.plotTarget).node().clientWidth;
@@ -58,6 +72,9 @@ VersatilePCP.prototype.draw = function() {
 			.append("svg")
 			.attr("viewBox", "0 0 " + width + " " + height)
 			.attr("class", "VersatilePCP.svg");
+
+		this.lines = this.svg.append("g");
+		this.axes = this.svg.append("g");
 	}
 
 	this.svg
@@ -67,7 +84,6 @@ VersatilePCP.prototype.draw = function() {
 	// draw pcp
 	if (this.plotData && this.plotData.length > 0) {
 		// don't draw if there is no data...
-		let axesSpec = [];
 
 		if(!this.plotAxes) {
 			// define all axes
@@ -90,6 +106,7 @@ VersatilePCP.prototype.draw = function() {
 		}
 
 		drawAxes(axesSpec);
+		drawLines();
 
 	} else {
 		throw "VersatilePCP: Data not found";
@@ -132,15 +149,16 @@ VersatilePCP.prototype.draw = function() {
 					.domain(el.domain)
 					.range(range);
 
-				el.axisCall = d3.axisLeft(scale)
-					.ticks(el.domain.length);
-					// .tickValues(el.domain);
+				el.axisCall = d3.axisLeft(scale);
+					// .ticks(el.domain.length);
 			}
+
+			axesScales[el.name] = scale;
 		});
 
-		let axisSpacing = (width - margin.left - margin.right) / (axes.length - 1);
+		axisSpacing = (width - margin.left - margin.right) / (axes.length - 1);
 
-		_this.svg.selectAll(".pcp-axis")
+	 	_this.axes.selectAll(".pcp-axis")
 			.data(axes).enter()
 		.append("g")
 			.attr("class", "pcp-axis")
@@ -150,6 +168,75 @@ VersatilePCP.prototype.draw = function() {
 			.each((d, i, nodes) => {
 				d.axisCall(d3.select(nodes[i]));
 			});
+
+		if(_this.isBrushable) {
+			console.log("Creating Brushes");
+
+			_this.axes.selectAll(".brush")
+				.data(axesSpec).enter()
+			.append("g")
+				.attr("class", "Vbrush")
+				.each((d, i, nodes) => {
+					d3.brushY()
+						.on("brush", brushed)
+						.extent([
+							[(margin.left + axisSpacing * i) - 10, margin.top],
+							[(margin.left + axisSpacing * i) + 10, height - margin.bottom]
+						])(d3.select(nodes[i]));
+				});
+		}
+
+		function brushed(d) {
+			// TODO: Create brushing filtering and update lines
+		}
+	}
+
+	function drawLines() {
+		let paths = _this.lines.selectAll(".dataPath")
+			.data(_this.plotData);
+
+		// exit
+		paths.exit().remove();
+
+		// update
+		_this.lines.selectAll(".dataPath")
+		.attr("d", (d) => {
+			let points = Object.keys(axesScales).map((el, i) => {
+				return "" + (margin.left + axisSpacing * i) + "," + axesScales[el](d[el]);
+			});
+
+			return "M" + points.join("L");
+		})
+		.style("stroke", _this.colorFunc)
+		.style("stroke-width", _this.strokeSize)
+		.style("stroke-opacity", _this.defaultOpacity)
+		.style("fill", "none");
+
+		// enter
+		paths.enter()
+		.append("path")
+			.attr("class", "dataPath")
+			.attr("d", (d) => {
+				let points = Object.keys(axesScales).map((el, i) => {
+					return "" + (margin.left + axisSpacing * i) + "," + axesScales[el](d[el]);
+				});
+
+				return "M" + points.join("L");
+			})
+			.style("stroke", _this.colorFunc)
+			.style("stroke-width", _this.strokeSize)
+			.style("stroke-opacity", _this.defaultOpacity)
+			.style("fill", "none");
+	}
+
+	function calculatePath(d) {
+		let points = Object.keys(axesScales).map((el, i) => {
+			return "" + (margin.left + axisSpacing * i) + "," + axesScales[el](d[el]);
+		});
+
+		console.log(points);
+
+		return "M" + points.join("L") + "Z";
 	}
 
 	return this;
@@ -235,6 +322,36 @@ VersatilePCP.prototype.brushable = function(brushable) {
   */
 VersatilePCP.prototype.color = function(color) {
 	this.colorFunc = color || function(d, i) { return "lightblue"; };
+
+	return this;
+}
+
+VersatilePCP.prototype.strokeWidth = function(width) {
+	if (width) {
+		this.strokeSize = width;
+	} else {
+		this.strokeSize = 1;
+	}
+
+	return this;
+}
+
+VersatilePCP.prototype.opacity = function(opacity) {
+	if (opacity) {
+		this.defaultOpacity = opacity;
+	} else {
+		this.defaultOpacity = 1;
+	}
+
+	return this;
+}
+
+VersatilePCP.prototype.filteredOpacity = function(opacity) {
+	if (opacity) {
+		this.filteredItemOpacity = opacity;
+	} else {
+		this.filteredItemOpacity = 0.1;
+	}
 
 	return this;
 }
