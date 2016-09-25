@@ -38,8 +38,21 @@ var myPCP = new VersatilePCP()
 		width: 1000,
 		height: 400
 	})
+	.setAxes([
+		{
+			name: "a",
+			rangeShrink: [0.25, 0.5]
+		},
+		{
+			name: "c",
+			rangeShrink: [0.5, 0.9]
+		}
+	],
+	"alter")
+	// "reduce")
 	.color("red")
 	.opacity(0.6)
+	.filteredOpacity(0.2)
 	.strokeWidth(5)
 	.brushable(true)
 	.draw();

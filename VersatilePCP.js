@@ -20,6 +20,7 @@ function VersatilePCP() {
 	this.strokeSize = 1;
 
 	this.plotAxes = null;
+	this.customAxesMode = null;
 
 	this.isBrushable = false;
 	this.filters = {}; // filters used if brushing is enabled
@@ -85,7 +86,20 @@ VersatilePCP.prototype.draw = function() {
 	if (this.plotData && this.plotData.length > 0) {
 		// don't draw if there is no data...
 
-		if(!this.plotAxes) {
+		if (this.customAxesMode === "reduce" && this.plotAxes) {
+			// use the custom axes
+			axesSpec = this.plotAxes.map((el) => {
+				let obj = {};
+
+				obj.name = el.name; // must have a name
+				obj.type = el.type || getAxisScaleType(this.plotData[0][obj.name]);
+				obj.domain = el.domain || calculateAxisExtent(this.plotData.map(el => el[obj.name]), obj.type);
+				// range used to shrink ordinal scales to be smaller than the
+				obj.rangeShrink = el.rangeShrink || [0, 1];
+
+				return obj;
+			});
+		} else {
 			// define all axes
 			let props = Object.keys(this.plotData[0]);
 
@@ -96,13 +110,28 @@ VersatilePCP.prototype.draw = function() {
 				};
 
 				axisObject.domain = calculateAxisExtent(this.plotData.map(el => el[key]), axisObject.type);
-
+				axisObject.rangeShrink = [.3, .9];
 				axesSpec.push(axisObject);
 			});
 
-		} else {
-			// use the custom axes
-			axesSpec = this.plotAxes;
+			if(this.plotAxes && this.customAxesMode === "alter") {
+				this.plotAxes.forEach((el) => {
+					let index = axesSpec.findIndex((el2) => {
+						return el2.name === el.name;
+					});
+
+					if (index !== -1) {
+						axesSpec[index].type = el.type ||
+							getAxisScaleType(this.plotData[0][axesSpec[index].name]); // default value
+						axesSpec[index].domain = el.domain ||
+							calculateAxisExtent(this.plotData.map(el => el[axesSpec[index].name]), axesSpec[index].type); // default value
+						// range used to shrink ordinal scales to be smaller than the
+						axesSpec[index].rangeShrink = el.rangeShrink || [0, 1];
+
+					}
+				});
+			}
+
 		}
 
 		drawAxes(axesSpec);
@@ -133,17 +162,36 @@ VersatilePCP.prototype.draw = function() {
 			let scale;
 
 			if (el.type === "linear") {
+				// alter domain based on rangeShrink to give full axis
+				let domainSize = (el.domain[1] - el.domain[0])/(el.rangeShrink[1] - el.rangeShrink[0]);
+				let newDomainStart = el.domain[0] - (domainSize * el.rangeShrink[0]);
+
+
 				scale = d3.scaleLinear()
-					.domain(el.domain)
-					.range([height - margin.bottom, margin.top])
+					.domain([newDomainStart, newDomainStart + domainSize])
+					.range([(height - margin.bottom), margin.top]);
 
 				el.axisCall = d3.axisLeft(scale)
 					.ticks(10);
 
 			} else if (el.type === "ordinal") {
+				let start = (height - margin.bottom) - (height - margin.bottom - margin.top) * (el.rangeShrink[0] - 0);
+				let end = margin.top + (height - margin.bottom - margin.top) * (1 - el.rangeShrink[1]);
+
 				let range = el.domain.map((d, i) => {
-					return (height - margin.bottom) - (i * (height - margin.bottom - margin.top) / (el.domain.length - 1));
+					return start - (i * (start - end) / (el.domain.length - 1));
 				});
+
+				// if there is a custom range then add dummy elements to domain to shift the scale
+				if (el.rangeShrink[0] > 0) {
+					el.domain.unshift("");
+					range.unshift(height - margin.bottom);
+				}
+				if (el.rangeShrink[1] < 1) {
+					el.domain.push("");
+					range.push(margin.top);
+				}
+
 
 				scale = d3.scaleOrdinal()
 					.domain(el.domain)
@@ -179,6 +227,7 @@ VersatilePCP.prototype.draw = function() {
 				.each((d, i, nodes) => {
 					d3.brushY()
 						.on("brush", brushed)
+						.on("end", brushended)
 						.extent([
 							[(margin.left + axisSpacing * i) - 10, margin.top],
 							[(margin.left + axisSpacing * i) + 10, height - margin.bottom]
@@ -188,6 +237,38 @@ VersatilePCP.prototype.draw = function() {
 
 		function brushed(d) {
 			// TODO: Create brushing filtering and update lines
+			let extent = d3.event.selection;
+
+			_this.filters[d.name] = extent;
+
+			_this.lines.selectAll(".dataPath")
+				.style("stroke-opacity", (d) => dataInFilter(d));
+		}
+
+		function brushended(d) {
+			// TODO: Create brushing filtering and update lines
+			if (!d3.event.selection) {
+				// clear this filter
+				delete _this.filters[d.name];
+
+				_this.lines.selectAll(".dataPath")
+					.style("stroke-opacity", (d) => dataInFilter(d));
+			}
+
+		}
+
+		function dataInFilter(d) {
+			let accepted = true;
+
+			// return the opacity of the line based on whether or not the data is filtered out
+			Object.keys(_this.filters).forEach((el) => {
+
+				if (axesScales[el](d[el]) > _this.filters[el][1] || axesScales[el](d[el]) < _this.filters[el][0]) {
+					accepted = false;
+				}
+			});
+
+			return accepted ? _this.defaultOpacity : _this.filteredItemOpacity;
 		}
 	}
 
@@ -259,11 +340,23 @@ VersatilePCP.prototype.data = function(data) {
   *
   * @method axes
   * @param axes       An array of axes to be used
+	* @param mode 			The mode which the custom axes is using "alter" or "reduce"
   */
-VersatilePCP.prototype.axes = function(axes) {
-	// axes must be array of data structure of this type
+VersatilePCP.prototype.setAxes = function(axes, mode) {
+	// axes must be array of objects of this type
+	/* OBJECT: [] := optional items
+		{
+			name: (name of property)
+			[, type: (type of scale, linear or ordinal)]
+			[, domain: (the domain of the data -- custom domain can be used for linear scale shifts)]
+			[, rangeShrink: (extent inside [0,1] with which to shrink the scale -- for ordinal scale shifts)]
+		}
+	*/
 
 	this.plotAxes = axes || null;
+
+	// "alter" changes specified axes, "reduce" only draws specified axes
+	this.customAxesMode = mode || "reduce";
 
 	return this;
 };
