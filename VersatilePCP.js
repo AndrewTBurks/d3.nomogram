@@ -348,8 +348,8 @@ VersatilePCP.prototype.data = function(data) {
   * Set the axes of the data that will be drawn
   *
   * @method setAxes
-  * @param {array} axes - An array of axes to be used
-	* @param {string} mode - The mode which the custom axes is using "alter" or "reduce"
+  * @param {array} [axes = null] - An array of axes to be used
+	* @param {string} [mode = "reduce"] - The mode which the custom axes is using "alter" or "reduce"
   */
 VersatilePCP.prototype.setAxes = function(axes, mode) {
 	// axes must be array of objects of this type
@@ -374,7 +374,7 @@ VersatilePCP.prototype.setAxes = function(axes, mode) {
   * Set the target element which the SVG will be appended to for drawing
   *
   * @method target
-  * @param {string} targetID - The ID of the pcp drawing target location
+  * @param {string} [targetID = "body"] - The ID of the pcp drawing target location
   */
 VersatilePCP.prototype.target = function(targetID) {
 	let oldTarget = this.plotTarget;
@@ -395,7 +395,7 @@ VersatilePCP.prototype.target = function(targetID) {
   * Set a specific size for the pcp
   *
   * @method size
-  * @param {object} [size = null] - The size of the plots
+  * @param {object} [size] - The size of the plots
   * @param {object} size.width - The width for the plots
   * @param {object} size.height - The height for the plots
   */
@@ -435,7 +435,7 @@ VersatilePCP.prototype.color = function(color) {
 	* index of line
   *
   * @method strokeWidth
-	* @param {number} width - Value or function defining how wide each line is
+	* @param {number} [width = 1] - Value or function defining how wide each line is
   */
 VersatilePCP.prototype.strokeWidth = function(width) {
 	if (width) {

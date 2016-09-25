@@ -15,10 +15,10 @@
 <dt><a href="#data">data(data)</a></dt>
 <dd><p>Set the data that will be used in the plots</p>
 </dd>
-<dt><a href="#setAxes">setAxes(axes, mode)</a></dt>
+<dt><a href="#setAxes">setAxes([axes], [mode])</a></dt>
 <dd><p>Set the axes of the data that will be drawn</p>
 </dd>
-<dt><a href="#target">target(targetID)</a></dt>
+<dt><a href="#target">target([targetID])</a></dt>
 <dd><p>Set the target element which the SVG will be appended to for drawing</p>
 </dd>
 <dt><a href="#size">size([size])</a></dt>
@@ -31,7 +31,7 @@
 <dd><p>Set a method or color value for each pcp line based on data and
 index of line</p>
 </dd>
-<dt><a href="#strokeWidth">strokeWidth(width)</a></dt>
+<dt><a href="#strokeWidth">strokeWidth([width])</a></dt>
 <dd><p>Set a method or width for each pcp line stroke-width based on data and
 index of line</p>
 </dd>
@@ -71,26 +71,26 @@ Set the data that will be used in the plots
 
 <a name="setAxes"></a>
 
-## setAxes(axes, mode)
+## setAxes([axes], [mode])
 Set the axes of the data that will be drawn
 
 **Kind**: global function  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| axes | <code>array</code> | An array of axes to be used |
-| mode | <code>string</code> | The mode which the custom axes is using "alter" or "reduce" |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [axes] | <code>array</code> | <code></code> | An array of axes to be used |
+| [mode] | <code>string</code> | <code>&quot;\&quot;reduce\&quot;&quot;</code> | The mode which the custom axes is using "alter" or "reduce" |
 
 <a name="target"></a>
 
-## target(targetID)
+## target([targetID])
 Set the target element which the SVG will be appended to for drawing
 
 **Kind**: global function  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| targetID | <code>string</code> | The ID of the pcp drawing target location |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [targetID] | <code>string</code> | <code>&quot;\&quot;body\&quot;&quot;</code> | The ID of the pcp drawing target location |
 
 <a name="size"></a>
 
@@ -99,11 +99,11 @@ Set a specific size for the pcp
 
 **Kind**: global function  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [size] | <code>object</code> | <code></code> | The size of the plots |
-| size.width | <code>object</code> |  | The width for the plots |
-| size.height | <code>object</code> |  | The height for the plots |
+| Param | Type | Description |
+| --- | --- | --- |
+| [size] | <code>object</code> | The size of the plots |
+| size.width | <code>object</code> | The width for the plots |
+| size.height | <code>object</code> | The height for the plots |
 
 <a name="brushable"></a>
 
@@ -129,14 +129,14 @@ Set a method or color value for each pcp line based on data andindex of line
 
 <a name="strokeWidth"></a>
 
-## strokeWidth(width)
+## strokeWidth([width])
 Set a method or width for each pcp line stroke-width based on data andindex of line
 
 **Kind**: global function  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| width | <code>number</code> | Value or function defining how wide each line is |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [width] | <code>number</code> | <code>1</code> | Value or function defining how wide each line is |
 
 <a name="opacity"></a>
 
