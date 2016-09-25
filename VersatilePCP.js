@@ -336,7 +336,7 @@ VersatilePCP.prototype.draw = function() {
   * Set the data that will be used in the plots
   *
   * @method data
-  * @param {object} data - The data to be used in the plots
+  * @param {array} data - The data to be used in the plots
   */
 VersatilePCP.prototype.data = function(data) {
 	this.plotData = data;
@@ -422,7 +422,7 @@ VersatilePCP.prototype.brushable = function(brushable) {
 	* index of line
   *
   * @method color
-	* @callback [color = "lightblue"] - Function defining how to color each line
+	* @param {function} [color = "lightblue"] - Function defining how to color each line
   */
 VersatilePCP.prototype.color = function(color) {
 	this.colorFunc = color || function(d, i) { return "lightblue"; };

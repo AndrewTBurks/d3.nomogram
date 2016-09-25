@@ -27,6 +27,10 @@
 <dt><a href="#brushable">brushable(brushable)</a></dt>
 <dd><p>Set brushable flag deciding if the pcp should be brushable or not</p>
 </dd>
+<dt><a href="#color">color([color])</a></dt>
+<dd><p>Set a method or color value for each pcp line based on data and
+index of line</p>
+</dd>
 <dt><a href="#strokeWidth">strokeWidth(width)</a></dt>
 <dd><p>Set a method or width for each pcp line stroke-width based on data and
 index of line</p>
@@ -39,15 +43,6 @@ index of line</p>
 <dd><p>Set a method or value for each pcp line opacity based on data and
 index of line when filter is applied to lines
 This is the opacity of lines which are outside of the filter</p>
-</dd>
-</dl>
-
-## Typedefs
-
-<dl>
-<dt><a href="#color">color</a> : <code>function</code></dt>
-<dd><p>Set a method or color value for each pcp line based on data and
-index of line</p>
 </dd>
 </dl>
 
@@ -72,7 +67,7 @@ Set the data that will be used in the plots
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>object</code> | The data to be used in the plots |
+| data | <code>array</code> | The data to be used in the plots |
 
 <a name="setAxes"></a>
 
@@ -121,6 +116,17 @@ Set brushable flag deciding if the pcp should be brushable or not
 | --- | --- | --- |
 | brushable | <code>boolean</code> | true/false if the pcp will be brushable |
 
+<a name="color"></a>
+
+## color([color])
+Set a method or color value for each pcp line based on data andindex of line
+
+**Kind**: global function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [color] | <code>function</code> | <code>&quot;lightblue&quot;</code> | Function defining how to color each line |
+
 <a name="strokeWidth"></a>
 
 ## strokeWidth(width)
@@ -154,9 +160,3 @@ Set a method or value for each pcp line opacity based on data andindex of line 
 | --- | --- | --- | --- |
 | [opacity] | <code>number</code> | <code>0.1</code> | Value or function [0,1] defining how opaque each line is when filter applied |
 
-<a name="color"></a>
-
-## color : <code>function</code>
-Set a method or color value for each pcp line based on data andindex of line
-
-**Kind**: global typedef  
