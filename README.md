@@ -119,7 +119,8 @@ Set brushable flag deciding if the pcp should be brushable or not
 <a name="color"></a>
 
 ## color([color])
-Set a method or color value for each pcp line based on data andindex of line
+Set a method or color value for each pcp line based on data and
+index of line
 
 **Kind**: global function  
 
@@ -130,7 +131,8 @@ Set a method or color value for each pcp line based on data andindex of line
 <a name="strokeWidth"></a>
 
 ## strokeWidth([width])
-Set a method or width for each pcp line stroke-width based on data andindex of line
+Set a method or width for each pcp line stroke-width based on data and
+index of line
 
 **Kind**: global function  
 
@@ -141,7 +143,8 @@ Set a method or width for each pcp line stroke-width based on data andindex of 
 <a name="opacity"></a>
 
 ## opacity([opacity])
-Set a method or value for each pcp line opacity based on data andindex of line
+Set a method or value for each pcp line opacity based on data and
+index of line
 
 **Kind**: global function  
 
@@ -152,7 +155,9 @@ Set a method or value for each pcp line opacity based on data andindex of line
 <a name="filteredOpacity"></a>
 
 ## filteredOpacity([opacity])
-Set a method or value for each pcp line opacity based on data andindex of line when filter is applied to linesThis is the opacity of lines which are outside of the filter
+Set a method or value for each pcp line opacity based on data and
+index of line when filter is applied to lines
+This is the opacity of lines which are outside of the filter
 
 **Kind**: global function  
 

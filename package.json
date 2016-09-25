@@ -21,8 +21,13 @@
   "dependencies": {
       "d3": "4.0"
   },
+	"devDependencies": {
+		"eslint": "",
+		"jsdoc-to-markdown": ""
+	},
 	"scripts" : {
-		"lint": "eslint --fix VersatilePCP.js"
+		"lint": "eslint --fix VersatilePCP.js",
+		"doc": "jsdoc2md VersatilePCP.js > README.md"
 	},
   "licenses": [
     {
