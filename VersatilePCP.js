@@ -7,6 +7,8 @@
 // require variables to be declared
 "use strict";
 
+/* global d3 */
+
 /**
   * @class VersatilePCP
   * @constructor
@@ -15,7 +17,7 @@
 function VersatilePCP() {
 	this.plotData = null;
 
-	this.colorFunc = function(d, i) { return "lightblue"; };
+	this.colorFunc = "lightblue";
 	this.defaultOpacity = 1;
 	this.strokeSize = 1;
 
@@ -57,7 +59,7 @@ VersatilePCP.prototype.draw = function() {
 
 	let axisSpacing;
 
-	if(!this.plotSize) {
+	if (!this.plotSize) {
 		// get size from target element
 		width = d3.select(this.plotTarget).node().clientWidth;
 		height = d3.select(this.plotTarget).node().clientHeight;
@@ -68,7 +70,7 @@ VersatilePCP.prototype.draw = function() {
 	}
 
 		// if drawing for first time, create svg
-	if(!this.svg) {
+	if (!this.svg) {
 		this.svg = d3.select(this.plotTarget)
 			.append("svg")
 			.attr("viewBox", "0 0 " + width + " " + height)
@@ -114,7 +116,7 @@ VersatilePCP.prototype.draw = function() {
 				axesSpec.push(axisObject);
 			});
 
-			if(this.plotAxes && this.customAxesMode === "alter") {
+			if (this.plotAxes && this.customAxesMode === "alter") {
 				this.plotAxes.forEach((el) => {
 					let index = axesSpec.findIndex((el2) => {
 						return el2.name === el.name;
@@ -153,7 +155,7 @@ VersatilePCP.prototype.draw = function() {
 		if (type === "linear") {
 			return d3.extent(data);
 		} else if (type === "ordinal") {
-			return data.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
+			return data.filter(function(item, i, ar) { return ar.indexOf(item) === i; });
 		}
 	}
 
@@ -163,7 +165,7 @@ VersatilePCP.prototype.draw = function() {
 
 			if (el.type === "linear") {
 				// alter domain based on rangeShrink to give full axis
-				let domainSize = (el.domain[1] - el.domain[0])/(el.rangeShrink[1] - el.rangeShrink[0]);
+				let domainSize = (el.domain[1] - el.domain[0]) / (el.rangeShrink[1] - el.rangeShrink[0]);
 				let newDomainStart = el.domain[0] - (domainSize * el.rangeShrink[0]);
 
 
@@ -206,7 +208,7 @@ VersatilePCP.prototype.draw = function() {
 
 		axisSpacing = (width - margin.left - margin.right) / (axes.length - 1);
 
-	 	_this.axes.selectAll(".pcp-axis")
+		_this.axes.selectAll(".pcp-axis")
 			.data(axes).enter()
 		.append("g")
 			.attr("class", "pcp-axis")
@@ -226,8 +228,7 @@ VersatilePCP.prototype.draw = function() {
 				d.axisCall(d3.select(nodes[i]));
 			});
 
-		if(_this.isBrushable) {
-			console.log("Creating Brushes");
+		if (_this.isBrushable) {
 
 			_this.axes.selectAll(".brush")
 				.data(axesSpec).enter()
@@ -306,13 +307,7 @@ VersatilePCP.prototype.draw = function() {
 		paths.enter()
 		.append("path")
 			.attr("class", "dataPath")
-			.attr("d", (d) => {
-				let points = Object.keys(axesScales).map((el, i) => {
-					return "" + (margin.left + axisSpacing * i) + "," + axesScales[el](d[el]);
-				});
-
-				return "M" + points.join("L");
-			})
+			.attr("d", calculatePath)
 			.style("stroke", _this.colorFunc)
 			.style("stroke-width", _this.strokeSize)
 			.style("stroke-opacity", _this.defaultOpacity)
@@ -324,9 +319,7 @@ VersatilePCP.prototype.draw = function() {
 			return "" + (margin.left + axisSpacing * i) + "," + axesScales[el](d[el]);
 		});
 
-		console.log(points);
-
-		return "M" + points.join("L") + "Z";
+		return "M" + points.join("L");
 	}
 
 	return this;
@@ -381,7 +374,7 @@ VersatilePCP.prototype.target = function(targetID) {
 
 	this.plotTarget = targetID || "body";
 
-	if(this.svg && oldTarget !== this.plotTarget) {
+	if (this.svg && oldTarget !== this.plotTarget) {
 		// if the target has changed, remove the svg from the old location
 		this.svg.remove();
 
@@ -403,7 +396,7 @@ VersatilePCP.prototype.size = function(size) {
 	this.plotSize = size || null;
 
 	return this;
-}
+};
 
 /**
   * Set brushable flag deciding if the pcp should be brushable or not
@@ -425,10 +418,10 @@ VersatilePCP.prototype.brushable = function(brushable) {
 	* @param {function} [color = "lightblue"] - Function defining how to color each line
   */
 VersatilePCP.prototype.color = function(color) {
-	this.colorFunc = color || function(d, i) { return "lightblue"; };
+	this.colorFunc = color || "lightblue";
 
 	return this;
-}
+};
 
 /**
   * Set a method or width for each pcp line stroke-width based on data and
@@ -445,7 +438,7 @@ VersatilePCP.prototype.strokeWidth = function(width) {
 	}
 
 	return this;
-}
+};
 
 /**
   * Set a method or value for each pcp line opacity based on data and
@@ -462,7 +455,7 @@ VersatilePCP.prototype.opacity = function(opacity) {
 	}
 
 	return this;
-}
+};
 
 /**
   * Set a method or value for each pcp line opacity based on data and
@@ -480,4 +473,4 @@ VersatilePCP.prototype.filteredOpacity = function(opacity) {
 	}
 
 	return this;
-}
+};

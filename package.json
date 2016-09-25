@@ -21,6 +21,9 @@
   "dependencies": {
       "d3": "4.0"
   },
+	"scripts" : {
+		"lint": "eslint --fix VersatilePCP.js"
+	},
   "licenses": [
     {
       "url": "https://github.com/AndrewTBurks/VersatilePCP/blob/master/LICENSE"
