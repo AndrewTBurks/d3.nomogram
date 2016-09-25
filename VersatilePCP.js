@@ -336,7 +336,7 @@ VersatilePCP.prototype.draw = function() {
   * Set the data that will be used in the plots
   *
   * @method data
-  * @param data       The data to be used in the plots
+  * @param {object} data - The data to be used in the plots
   */
 VersatilePCP.prototype.data = function(data) {
 	this.plotData = data;
@@ -348,8 +348,8 @@ VersatilePCP.prototype.data = function(data) {
   * Set the axes of the data that will be drawn
   *
   * @method setAxes
-  * @param axes       An array of axes to be used
-	* @param mode 			The mode which the custom axes is using "alter" or "reduce"
+  * @param {array} axes - An array of axes to be used
+	* @param {string} mode - The mode which the custom axes is using "alter" or "reduce"
   */
 VersatilePCP.prototype.setAxes = function(axes, mode) {
 	// axes must be array of objects of this type
@@ -374,7 +374,7 @@ VersatilePCP.prototype.setAxes = function(axes, mode) {
   * Set the target element which the SVG will be appended to for drawing
   *
   * @method target
-  * @param targetID			The ID of the pcp drawing target location
+  * @param {string} targetID - The ID of the pcp drawing target location
   */
 VersatilePCP.prototype.target = function(targetID) {
 	let oldTarget = this.plotTarget;
@@ -395,7 +395,9 @@ VersatilePCP.prototype.target = function(targetID) {
   * Set a specific size for the pcp
   *
   * @method size
-  * @param size			The {width: w, height: h} for the plots
+  * @param {object} [size = null] - The size of the plots
+  * @param {object} size.width - The width for the plots
+  * @param {object} size.height - The height for the plots
   */
 VersatilePCP.prototype.size = function(size) {
 	this.plotSize = size || null;
@@ -407,7 +409,7 @@ VersatilePCP.prototype.size = function(size) {
   * Set brushable flag deciding if the pcp should be brushable or not
   *
   * @method brushable
-	* @param brushable		true/false if the pcp will be brushable
+	* @param {boolean} brushable -	true/false if the pcp will be brushable
   */
 VersatilePCP.prototype.brushable = function(brushable) {
 	this.isBrushable = brushable;
@@ -420,7 +422,7 @@ VersatilePCP.prototype.brushable = function(brushable) {
 	* index of line
   *
   * @method color
-	* @param color 			Function defining how to color each line
+	* @callback [color = "lightblue"] - Function defining how to color each line
   */
 VersatilePCP.prototype.color = function(color) {
 	this.colorFunc = color || function(d, i) { return "lightblue"; };
@@ -433,7 +435,7 @@ VersatilePCP.prototype.color = function(color) {
 	* index of line
   *
   * @method strokeWidth
-	* @param width			Value or function defining how wide each line is
+	* @param {number} width - Value or function defining how wide each line is
   */
 VersatilePCP.prototype.strokeWidth = function(width) {
 	if (width) {
@@ -450,7 +452,7 @@ VersatilePCP.prototype.strokeWidth = function(width) {
 	* index of line
   *
   * @method opacity
-	* @param opacity			Value or function defining how opaque each line is
+	* @param {number} [opacity = 1] - Value or function [0,1] defining how opaque each line is
   */
 VersatilePCP.prototype.opacity = function(opacity) {
 	if (opacity) {
@@ -467,8 +469,8 @@ VersatilePCP.prototype.opacity = function(opacity) {
 	* index of line when filter is applied to lines
 	* This is the opacity of lines which are outside of the filter
   *
-  * @method opacity
-	* @param opacity			Value or function defining how opaque each line is when filter applied
+  * @method filteredOpacity
+	* @param {number} [opacity = 0.1]	- Value or function [0,1] defining how opaque each line is when filter applied
   */
 VersatilePCP.prototype.filteredOpacity = function(opacity) {
 	if (opacity) {
