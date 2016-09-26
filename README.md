@@ -1,19 +1,3 @@
-## Classes
-
-<dl>
-<dt><a href="#VersatilePCP">VersatilePCP</a></dt>
-<dd><p>VersatilePCP</p>
-</dd>
-</dl>
-
-## Functions
-
-<dl>
-<dt><a href="#draw">draw()</a></dt>
-<dd><p>Draw the parallel coordinate plots</p>
-</dd>
-</dl>
-
 <a name="VersatilePCP"></a>
 
 ## VersatilePCP
@@ -22,6 +6,7 @@ VersatilePCP
 **Kind**: global class  
 
 * [VersatilePCP](#VersatilePCP)
+    * [.draw()](#VersatilePCP+draw)
     * [.data(data)](#VersatilePCP+data)
     * [.setAxes([axes], [mode])](#VersatilePCP+setAxes)
     * [.target([targetID])](#VersatilePCP+target)
@@ -32,6 +17,12 @@ VersatilePCP
     * [.opacity([opacity])](#VersatilePCP+opacity)
     * [.filteredOpacity([opacity])](#VersatilePCP+filteredOpacity)
 
+<a name="VersatilePCP+draw"></a>
+
+### versatilePCP.draw()
+Draw the parallel coordinate plots
+
+**Kind**: instance method of <code>[VersatilePCP](#VersatilePCP)</code>  
 <a name="VersatilePCP+data"></a>
 
 ### versatilePCP.data(data)
@@ -139,9 +130,3 @@ This is the opacity of lines which are outside of the filter
 | --- | --- | --- | --- |
 | [opacity] | <code>number</code> | <code>0.1</code> | Value or function [0,1] defining how opaque each line is when filter applied |
 
-<a name="draw"></a>
-
-## draw()
-Draw the parallel coordinate plots
-
-**Kind**: global function  

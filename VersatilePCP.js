@@ -39,8 +39,6 @@ function VersatilePCP() {
 
 /**
   * Draw the parallel coordinate plots
-  *
-  * @method draw
   */
 VersatilePCP.prototype.draw = function() {
 	let _this = this;
