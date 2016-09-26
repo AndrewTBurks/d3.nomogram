@@ -22,14 +22,16 @@
       "d3": "4.0"
   },
 	"devDependencies": {
-		"eslint": "",
-		"jsdoc-to-markdown": ""
+		"eslint": "latest",
+		"jsdoc-to-markdown": "latest"
 	},
 	"scripts" : {
 		"lint": "eslint --fix VersatilePCP.js",
-		"doc": "jsdoc2md VersatilePCP.js > README.md"
+		"doc": "jsdoc2md VersatilePCP.js > README.md",
+		"in": "npm install",
+		"indev": "npm install --dev"
 	},
-  "licenses": [
+  "license": [
     {
       "url": "https://github.com/AndrewTBurks/VersatilePCP/blob/master/LICENSE"
     }
