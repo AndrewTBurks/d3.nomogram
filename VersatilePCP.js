@@ -329,7 +329,6 @@ VersatilePCP.prototype.draw = function() {
 /**
   * Set the data that will be used in the plots
   *
-  * @method data
   * @param {array} data - The data to be used in the plots
   */
 VersatilePCP.prototype.data = function(data) {
@@ -341,7 +340,6 @@ VersatilePCP.prototype.data = function(data) {
 /**
   * Set the axes of the data that will be drawn
   *
-  * @method setAxes
   * @param {array} [axes = null] - An array of axes to be used
 	* @param {string} [mode = reduce] - The mode which the custom axes is using "alter" or "reduce"
   */
@@ -367,7 +365,6 @@ VersatilePCP.prototype.setAxes = function(axes, mode) {
 /**
   * Set the target element which the SVG will be appended to for drawing
   *
-  * @method target
   * @param {string} [targetID = body] - The ID of the pcp drawing target location
   */
 VersatilePCP.prototype.target = function(targetID) {
@@ -388,7 +385,6 @@ VersatilePCP.prototype.target = function(targetID) {
 /**
   * Set a specific size for the pcp
   *
-  * @method size
   * @param {object} [size] - The size of the plots
   * @param {object} size.width - The width for the plots
   * @param {object} size.height - The height for the plots
@@ -402,7 +398,6 @@ VersatilePCP.prototype.size = function(size) {
 /**
   * Set brushable flag deciding if the pcp should be brushable or not
   *
-  * @method brushable
 	* @param {boolean} brushable -	true/false if the pcp will be brushable
   */
 VersatilePCP.prototype.brushable = function(brushable) {
@@ -415,7 +410,6 @@ VersatilePCP.prototype.brushable = function(brushable) {
   * Set a method or color value for each pcp line based on data and
 	* index of line
   *
-  * @method color
 	* @param {function} [color = "lightblue"] - Function defining how to color each line
   */
 VersatilePCP.prototype.color = function(color) {
@@ -428,7 +422,6 @@ VersatilePCP.prototype.color = function(color) {
   * Set a method or width for each pcp line stroke-width based on data and
 	* index of line
   *
-  * @method strokeWidth
 	* @param {number} [width = 1] - Value or function defining how wide each line is
   */
 VersatilePCP.prototype.strokeWidth = function(width) {
@@ -445,7 +438,6 @@ VersatilePCP.prototype.strokeWidth = function(width) {
   * Set a method or value for each pcp line opacity based on data and
 	* index of line
   *
-  * @method opacity
 	* @param {number} [opacity = 1] - Value or function [0,1] defining how opaque each line is
   */
 VersatilePCP.prototype.opacity = function(opacity) {
