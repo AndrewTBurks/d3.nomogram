@@ -463,7 +463,6 @@ VersatilePCP.prototype.opacity = function(opacity) {
 	* index of line when filter is applied to lines
 	* This is the opacity of lines which are outside of the filter
   *
-  * @method filteredOpacity
 	* @param {number} [opacity = 0.1]	- Value or function [0,1] defining how opaque each line is when filter applied
   */
 VersatilePCP.prototype.filteredOpacity = function(opacity) {

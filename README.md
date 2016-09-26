@@ -39,11 +39,6 @@ index of line</p>
 <dd><p>Set a method or value for each pcp line opacity based on data and
 index of line</p>
 </dd>
-<dt><a href="#filteredOpacity">filteredOpacity([opacity])</a></dt>
-<dd><p>Set a method or value for each pcp line opacity based on data and
-index of line when filter is applied to lines
-This is the opacity of lines which are outside of the filter</p>
-</dd>
 </dl>
 
 <a name="VersatilePCP"></a>
@@ -52,6 +47,19 @@ This is the opacity of lines which are outside of the filter</p>
 VersatilePCP
 
 **Kind**: global class  
+<a name="VersatilePCP+filteredOpacity"></a>
+
+### versatilePCP.filteredOpacity([opacity])
+Set a method or value for each pcp line opacity based on data and
+index of line when filter is applied to lines
+This is the opacity of lines which are outside of the filter
+
+**Kind**: instance method of <code>[VersatilePCP](#VersatilePCP)</code>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [opacity] | <code>number</code> | <code>0.1</code> | Value or function [0,1] defining how opaque each line is when filter applied |
+
 <a name="draw"></a>
 
 ## draw()
@@ -151,17 +159,4 @@ index of line
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [opacity] | <code>number</code> | <code>1</code> | Value or function [0,1] defining how opaque each line is |
-
-<a name="filteredOpacity"></a>
-
-## filteredOpacity([opacity])
-Set a method or value for each pcp line opacity based on data and
-index of line when filter is applied to lines
-This is the opacity of lines which are outside of the filter
-
-**Kind**: global function  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [opacity] | <code>number</code> | <code>0.1</code> | Value or function [0,1] defining how opaque each line is when filter applied |
 
