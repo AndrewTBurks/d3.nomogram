@@ -112,7 +112,7 @@ VersatilePCP.prototype.draw = function() {
 				};
 
 				axisObject.domain = calculateAxisExtent(this.plotData.map(el => el[key]), axisObject.type);
-				axisObject.rangeShrink = [.3, .9];
+				axisObject.rangeShrink = [0, 1];
 				axesSpec.push(axisObject);
 			});
 
@@ -219,9 +219,9 @@ VersatilePCP.prototype.draw = function() {
 				d3.select(nodes[i]).append("text")
 					.text(d.name)
 					.attr("y", margin.top - 12)
-					.style("font-size", 14)
+					.attr("class", "axis-title")
+					.style("font-size", 12)
 					.style("font-family", "sans-serif")
-					.style("font-weight", "bold")
 					.style("text-anchor", "middle")
 					.style("fill", "black");
 
@@ -308,6 +308,7 @@ VersatilePCP.prototype.draw = function() {
 		.append("path")
 			.attr("class", "dataPath")
 			.attr("d", calculatePath)
+			.style("stroke-linecap", "round")
 			.style("stroke", _this.colorFunc)
 			.style("stroke-width", _this.strokeSize)
 			.style("stroke-opacity", _this.defaultOpacity)
