@@ -208,16 +208,10 @@ VersatilePCP.prototype.draw = function() {
 
 		axisSpacing = (width - margin.left - margin.right) / (axes.length - 1);
 
-		let dataBoundAxes = _this.axes.selectAll(".pcp-axis").data(axes);
-
-		dataBoundAxes.exit().remove();
+		_this.axes.selectAll(".pcp-axis").remove();
 
 		_this.axes.selectAll(".pcp-axis")
-			.attr("transform", (d, i) => {
-				return "translate(" + (margin.left + axisSpacing * i) + ", 0)";
-			});
-
-		dataBoundAxes.enter()
+			.data(axes).enter()
 		.append("g")
 			.attr("class", "pcp-axis")
 			.attr("transform", (d, i) => {
