@@ -282,9 +282,31 @@ VersatilePCP.prototype.draw = function() {
 		}
 	}
 
+	function filterDataByDomains(data) {
+		return data.filter((el) => {
+			let inFilter = true;
+
+			axesSpec.forEach((s) => {
+				let domain = s.domain;
+
+				if (s.type === "linear") {
+					if (el[s.name] < domain[0] || el[s.name] > domain[1]) {
+						inFilter = false;
+					}
+				} else if (s.type === "ordinal") {
+					if (domain.indexOf(el[s.name]) === -1) {
+						inFilter = false;
+					}
+				}
+			});
+
+			return inFilter;
+		});
+	}
+
 	function drawLines() {
 		let paths = _this.lines.selectAll(".dataPath")
-			.data(_this.plotData);
+			.data(filterDataByDomains(_this.plotData));
 
 		// exit
 		paths.exit().remove();

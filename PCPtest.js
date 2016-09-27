@@ -43,21 +43,16 @@ let myPCP = new VersatilePCP()
 	.setAxes([
 		{
 			name: "Thing1",
-			rangeShrink: [0.25, 0.5]
+			domain: [2, 5]
+			// rangeShrink: [0.25, 0.5]
 		},
 		{
 			name: "Word1",
 			rangeShrink: [0.5, 0.9]
 		}
 	],
-	"alter")
-	.margins({
-		top: 100,
-		bottom: 0,
-		left: 60,
-		right: 10
-	})
 	// "reduce")
+	"alter")
 	.color("red")
 	.opacity(0.6)
 	.filteredOpacity(0.2)
