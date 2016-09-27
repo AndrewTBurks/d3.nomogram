@@ -16,6 +16,7 @@ VersatilePCP
     * [.strokeWidth([width])](#VersatilePCP+strokeWidth)
     * [.opacity([opacity])](#VersatilePCP+opacity)
     * [.filteredOpacity([opacity])](#VersatilePCP+filteredOpacity)
+    * [.margins([margins])](#VersatilePCP+margins)
 
 <a name="VersatilePCP+draw"></a>
 
@@ -129,4 +130,19 @@ This is the opacity of lines which are outside of the filter
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [opacity] | <code>number</code> | <code>0.1</code> | Value or function [0,1] defining how opaque each line is when filter applied |
+
+<a name="VersatilePCP+margins"></a>
+
+### versatilePCP.margins([margins])
+Set the margins around the pcp within the drawing space
+
+**Kind**: instance method of <code>[VersatilePCP](#VersatilePCP)</code>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [margins] | <code>object</code> | <code></code> | Object specifying margins |
+| margins.top | <code>number</code> |  | = 50 - Top Margin |
+| margins.bottom | <code>number</code> |  | = 20 - Bottom Margin |
+| margins.left | <code>number</code> |  | = 30 - Left Margin |
+| margins.right | <code>number</code> |  | = 30 - Right Margin |
 

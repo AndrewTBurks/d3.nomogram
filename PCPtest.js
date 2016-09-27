@@ -1,4 +1,6 @@
-var myData = [
+/* global VersatilePCP */
+
+let myData = [
 	{
 		Thing1: 1,
 		Thing2: 2,
@@ -31,7 +33,7 @@ var myData = [
 	}
 ];
 
-var myPCP = new VersatilePCP()
+let myPCP = new VersatilePCP()
 	.data(myData)
 	.target("#myDiv")
 	.size({
@@ -49,6 +51,12 @@ var myPCP = new VersatilePCP()
 		}
 	],
 	"alter")
+	.margins({
+		top: 100,
+		bottom: 0,
+		left: 60,
+		right: 10
+	})
 	// "reduce")
 	.color("red")
 	.opacity(0.6)
@@ -56,5 +64,3 @@ var myPCP = new VersatilePCP()
 	.strokeWidth(5)
 	.brushable(true)
 	.draw();
-
-console.log(myPCP);

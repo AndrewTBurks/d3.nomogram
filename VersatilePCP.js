@@ -35,6 +35,8 @@ function VersatilePCP() {
 	this.lines = null;
 
 	this.plotSize = null;
+
+	this.plotMargins = null;
 }
 
 /**
@@ -45,7 +47,7 @@ VersatilePCP.prototype.draw = function() {
 
 	let width, height;
 
-	let margin = {
+	let margin = this.plotMargins || {
 		top: 50,
 		bottom: 20,
 		left: 30,
@@ -439,7 +441,7 @@ VersatilePCP.prototype.strokeWidth = function(width) {
 	* @param {number} [opacity = 1] - Value or function [0,1] defining how opaque each line is
   */
 VersatilePCP.prototype.opacity = function(opacity) {
-	if (opacity) {
+	if (opacity || opacity === 0) {
 		this.defaultOpacity = opacity;
 	} else {
 		this.defaultOpacity = 1;
@@ -456,10 +458,29 @@ VersatilePCP.prototype.opacity = function(opacity) {
 	* @param {number} [opacity = 0.1]	- Value or function [0,1] defining how opaque each line is when filter applied
   */
 VersatilePCP.prototype.filteredOpacity = function(opacity) {
-	if (opacity) {
+	if (opacity || opacity === 0) {
 		this.filteredItemOpacity = opacity;
 	} else {
 		this.filteredItemOpacity = 0.1;
+	}
+
+	return this;
+};
+
+/**
+  * Set the margins around the pcp within the drawing space
+  *
+	* @param {object} [margins = null] - Object specifying margins
+	* @param {number} margins.top = 50 - Top Margin
+	* @param {number} margins.bottom = 20 - Bottom Margin
+	* @param {number} margins.left = 30 - Left Margin
+	* @param {number} margins.right = 30 - Right Margin
+  */
+VersatilePCP.prototype.margins = function(margins) {
+	if (margins) {
+		this.plotMargins = margins;
+	} else {
+		this.plotMargins = null;
 	}
 
 	return this;
