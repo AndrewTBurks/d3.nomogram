@@ -26,8 +26,8 @@
 		"jsdoc-to-markdown": "latest"
 	},
 	"scripts" : {
-		"lint": "eslint --fix VersatilePCP.js",
-		"doc": "jsdoc2md VersatilePCP.js > README.md",
+		"lint": "eslint --fix d3.nomogram.js",
+		"doc": "jsdoc2md d3.nomogram.js > README.md",
 		"in": "npm install",
 		"indev": "npm install --dev"
 	},
