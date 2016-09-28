@@ -496,11 +496,7 @@ Nomogram.prototype.filteredOpacity = function(opacity) {
 /**
   * Set the margins around the nomogram within the drawing space
   *
-	* @param {object} [margins = null] - Object specifying margins
-	* @param {number} margins.top = 50 - Top Margin
-	* @param {number} margins.bottom = 20 - Bottom Margin
-	* @param {number} margins.left = 30 - Left Margin
-	* @param {number} margins.right = 30 - Right Margin
+	* @param {object} [margins = {top: 50, bottom: 20, left: 30, right: 30}] - Object specifying margins
   */
 Nomogram.prototype.margins = function(margins) {
 	if (margins) {

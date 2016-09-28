@@ -140,9 +140,5 @@ Set the margins around the nomogram within the drawing space
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [margins] | <code>object</code> | <code></code> | Object specifying margins |
-| margins.top | <code>number</code> |  | = 50 - Top Margin |
-| margins.bottom | <code>number</code> |  | = 20 - Bottom Margin |
-| margins.left | <code>number</code> |  | = 30 - Left Margin |
-| margins.right | <code>number</code> |  | = 30 - Right Margin |
+| [margins] | <code>object</code> | <code>{top: 50, bottom: 20, left: 30, right: 30}</code> | Object specifying margins |
 
