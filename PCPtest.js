@@ -1,4 +1,5 @@
-/* global VersatilePCP */
+/* global d3.nomogram */
+/* global d3 */
 
 let myData = [
 	{
@@ -33,7 +34,7 @@ let myData = [
 	}
 ];
 
-let myPCP = new VersatilePCP()
+let myPCP = new d3.nomogram()
 	.data(myData)
 	.target("#myDiv")
 	.size({

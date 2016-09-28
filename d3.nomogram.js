@@ -10,11 +10,11 @@
 /* global d3 */
 
 /**
-  * @class VersatilePCP
+  * @class d3.nomogram
   * @constructor
   */
 
-function VersatilePCP() {
+d3.nomogram = function() {
 	this.plotData = null;
 
 	this.colorFunc = "lightblue";
@@ -37,12 +37,12 @@ function VersatilePCP() {
 	this.plotSize = null;
 
 	this.plotMargins = null;
-}
+};
 
 /**
-  * Draw the parallel coordinate plots
+  * Draw the nomogram
   */
-VersatilePCP.prototype.draw = function() {
+d3.nomogram.prototype.draw = function() {
 	let _this = this;
 
 	let width, height;
@@ -74,7 +74,7 @@ VersatilePCP.prototype.draw = function() {
 		this.svg = d3.select(this.plotTarget)
 			.append("svg")
 			.attr("viewBox", "0 0 " + width + " " + height)
-			.attr("class", "VersatilePCP.svg");
+			.attr("class", "d3.nomogram.svg");
 
 		this.lines = this.svg.append("g");
 		this.axes = this.svg.append("g");
@@ -84,7 +84,7 @@ VersatilePCP.prototype.draw = function() {
 		.attr("width", width)
 		.attr("height", height);
 
-	// draw pcp
+	// draw nomogram
 	if (this.plotData && this.plotData.length > 0) {
 		// don't draw if there is no data...
 
@@ -140,7 +140,7 @@ VersatilePCP.prototype.draw = function() {
 		drawLines();
 
 	} else {
-		throw "VersatilePCP: Data not found";
+		throw "d3.nomogram: Data not found";
 	}
 
 	function getAxisScaleType(val) {
@@ -208,12 +208,12 @@ VersatilePCP.prototype.draw = function() {
 
 		axisSpacing = (width - margin.left - margin.right) / (axes.length - 1);
 
-		_this.axes.selectAll(".pcp-axis").remove();
+		_this.axes.selectAll(".nomogram-axis").remove();
 
-		_this.axes.selectAll(".pcp-axis")
+		_this.axes.selectAll(".nomogram-axis")
 			.data(axes).enter()
 		.append("g")
-			.attr("class", "pcp-axis")
+			.attr("class", "nomogram-axis")
 			.attr("transform", (d, i) => {
 				return "translate(" + (margin.left + axisSpacing * i) + ", 0)";
 			})
@@ -357,7 +357,7 @@ VersatilePCP.prototype.draw = function() {
   *
   * @param {array} data - The data to be used in the plots
   */
-VersatilePCP.prototype.data = function(data) {
+d3.nomogram.prototype.data = function(data) {
 	this.plotData = data;
 
 	return this;
@@ -369,7 +369,7 @@ VersatilePCP.prototype.data = function(data) {
   * @param {array} [axes = null] - An array of axes to be used
 	* @param {string} [mode = reduce] - The mode which the custom axes is using "alter" or "reduce"
   */
-VersatilePCP.prototype.setAxes = function(axes, mode) {
+d3.nomogram.prototype.setAxes = function(axes, mode) {
 	// axes must be array of objects of this type
 	/* OBJECT: [] := optional items
 		{
@@ -391,9 +391,9 @@ VersatilePCP.prototype.setAxes = function(axes, mode) {
 /**
   * Set the target element which the SVG will be appended to for drawing
   *
-  * @param {string} [targetID = body] - The ID of the pcp drawing target location
+  * @param {string} [targetID = body] - The ID of the nomogram drawing target location
   */
-VersatilePCP.prototype.target = function(targetID) {
+d3.nomogram.prototype.target = function(targetID) {
 	let oldTarget = this.plotTarget;
 
 	this.plotTarget = targetID || "body";
@@ -409,48 +409,48 @@ VersatilePCP.prototype.target = function(targetID) {
 };
 
 /**
-  * Set a specific size for the pcp
+  * Set a specific size for the nomogram
   *
   * @param {object} [size] - The size of the plots
   * @param {object} size.width - The width for the plots
   * @param {object} size.height - The height for the plots
   */
-VersatilePCP.prototype.size = function(size) {
+d3.nomogram.prototype.size = function(size) {
 	this.plotSize = size || null;
 
 	return this;
 };
 
 /**
-  * Set brushable flag deciding if the pcp should be brushable or not
+  * Set brushable flag deciding if the nomogram should be brushable or not
   *
-	* @param {boolean} brushable -	true/false if the pcp will be brushable
+	* @param {boolean} brushable -	true/false if the nomogram will be brushable
   */
-VersatilePCP.prototype.brushable = function(brushable) {
+d3.nomogram.prototype.brushable = function(brushable) {
 	this.isBrushable = brushable;
 
 	return this;
 };
 
 /**
-  * Set a method or color value for each pcp line based on data and
+  * Set a method or color value for each nomogram line based on data and
 	* index of line
   *
 	* @param {function} [color = "lightblue"] - Function defining how to color each line
   */
-VersatilePCP.prototype.color = function(color) {
+d3.nomogram.prototype.color = function(color) {
 	this.colorFunc = color || "lightblue";
 
 	return this;
 };
 
 /**
-  * Set a method or width for each pcp line stroke-width based on data and
+  * Set a method or width for each nomogram line stroke-width based on data and
 	* index of line
   *
 	* @param {number} [width = 1] - Value or function defining how wide each line is
   */
-VersatilePCP.prototype.strokeWidth = function(width) {
+d3.nomogram.prototype.strokeWidth = function(width) {
 	if (width) {
 		this.strokeSize = width;
 	} else {
@@ -461,12 +461,12 @@ VersatilePCP.prototype.strokeWidth = function(width) {
 };
 
 /**
-  * Set a method or value for each pcp line opacity based on data and
+  * Set a method or value for each nomogram line opacity based on data and
 	* index of line
   *
 	* @param {number} [opacity = 1] - Value or function [0,1] defining how opaque each line is
   */
-VersatilePCP.prototype.opacity = function(opacity) {
+d3.nomogram.prototype.opacity = function(opacity) {
 	if (opacity || opacity === 0) {
 		this.defaultOpacity = opacity;
 	} else {
@@ -477,13 +477,13 @@ VersatilePCP.prototype.opacity = function(opacity) {
 };
 
 /**
-  * Set a method or value for each pcp line opacity based on data and
+  * Set a method or value for each nomogram line opacity based on data and
 	* index of line when filter is applied to lines
 	* This is the opacity of lines which are outside of the filter
   *
 	* @param {number} [opacity = 0.1]	- Value or function [0,1] defining how opaque each line is when filter applied
   */
-VersatilePCP.prototype.filteredOpacity = function(opacity) {
+d3.nomogram.prototype.filteredOpacity = function(opacity) {
 	if (opacity || opacity === 0) {
 		this.filteredItemOpacity = opacity;
 	} else {
@@ -494,7 +494,7 @@ VersatilePCP.prototype.filteredOpacity = function(opacity) {
 };
 
 /**
-  * Set the margins around the pcp within the drawing space
+  * Set the margins around the nomogram within the drawing space
   *
 	* @param {object} [margins = null] - Object specifying margins
 	* @param {number} margins.top = 50 - Top Margin
@@ -502,7 +502,7 @@ VersatilePCP.prototype.filteredOpacity = function(opacity) {
 	* @param {number} margins.left = 30 - Left Margin
 	* @param {number} margins.right = 30 - Right Margin
   */
-VersatilePCP.prototype.margins = function(margins) {
+d3.nomogram.prototype.margins = function(margins) {
 	if (margins) {
 		this.plotMargins = margins;
 	} else {
