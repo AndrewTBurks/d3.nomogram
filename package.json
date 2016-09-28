@@ -1,14 +1,14 @@
 {
-  "name": "VersatilePCP",
+  "name": "d3.nomogram",
   "version": "0.1.0",
-	"main": "VersatilePCP.js",
-  "description": "VersatilePCP: Highly customizable SVG-Based Parallel Coordinate Plots library.",
+	"main": "d3.nomogram.js",
+  "description": "VersatilePCP: Highly customizable SVG-Based Nomogram library.",
   "keywords": [
     "d3",
     "visualization",
     "parallel coordinates"
   ],
-  "homepage": "https://github.com/AndrewTBurks/VersatilePCP",
+  "homepage": "https://github.com/AndrewTBurks/d3.nomogram",
   "author": {
     "name": "Andrew Burks",
     "url": "https://github.com/AndrewTBurks"
@@ -16,7 +16,7 @@
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/AndrewTBurks/VersatilePCP.git"
+    "url": "https://github.com/AndrewTBurks/d3.nomogram.git"
   },
   "dependencies": {
       "d3": "4.0"
@@ -27,13 +27,13 @@
 	},
 	"scripts" : {
 		"lint": "eslint --fix d3.nomogram.js",
-		"doc": "jsdoc2md d3.nomogram.js > README.md",
+		"doc": "jsdoc2md \"d3.nomogram.js\" > README.md",
 		"in": "npm install",
 		"indev": "npm install --dev"
 	},
   "license": [
     {
-      "url": "https://github.com/AndrewTBurks/VersatilePCP/blob/master/LICENSE"
+      "url": "https://github.com/AndrewTBurks/d3.nomogram/blob/master/LICENSE"
     }
   ]
 }

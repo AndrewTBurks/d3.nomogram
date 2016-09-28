@@ -10,11 +10,11 @@
 /* global d3 */
 
 /**
-  * @class d3.nomogram
+  * @class Nomogram
   * @constructor
   */
 
-d3.nomogram = function() {
+function Nomogram() {
 	this.plotData = null;
 
 	this.colorFunc = "lightblue";
@@ -37,12 +37,12 @@ d3.nomogram = function() {
 	this.plotSize = null;
 
 	this.plotMargins = null;
-};
+}
 
 /**
   * Draw the nomogram
   */
-d3.nomogram.prototype.draw = function() {
+Nomogram.prototype.draw = function() {
 	let _this = this;
 
 	let width, height;
@@ -74,7 +74,7 @@ d3.nomogram.prototype.draw = function() {
 		this.svg = d3.select(this.plotTarget)
 			.append("svg")
 			.attr("viewBox", "0 0 " + width + " " + height)
-			.attr("class", "d3.nomogram.svg");
+			.attr("class", "Nomogram.svg");
 
 		this.lines = this.svg.append("g");
 		this.axes = this.svg.append("g");
@@ -357,7 +357,7 @@ d3.nomogram.prototype.draw = function() {
   *
   * @param {array} data - The data to be used in the plots
   */
-d3.nomogram.prototype.data = function(data) {
+Nomogram.prototype.data = function(data) {
 	this.plotData = data;
 
 	return this;
@@ -369,7 +369,7 @@ d3.nomogram.prototype.data = function(data) {
   * @param {array} [axes = null] - An array of axes to be used
 	* @param {string} [mode = reduce] - The mode which the custom axes is using "alter" or "reduce"
   */
-d3.nomogram.prototype.setAxes = function(axes, mode) {
+Nomogram.prototype.setAxes = function(axes, mode) {
 	// axes must be array of objects of this type
 	/* OBJECT: [] := optional items
 		{
@@ -393,7 +393,7 @@ d3.nomogram.prototype.setAxes = function(axes, mode) {
   *
   * @param {string} [targetID = body] - The ID of the nomogram drawing target location
   */
-d3.nomogram.prototype.target = function(targetID) {
+Nomogram.prototype.target = function(targetID) {
 	let oldTarget = this.plotTarget;
 
 	this.plotTarget = targetID || "body";
@@ -415,7 +415,7 @@ d3.nomogram.prototype.target = function(targetID) {
   * @param {object} size.width - The width for the plots
   * @param {object} size.height - The height for the plots
   */
-d3.nomogram.prototype.size = function(size) {
+Nomogram.prototype.size = function(size) {
 	this.plotSize = size || null;
 
 	return this;
@@ -426,7 +426,7 @@ d3.nomogram.prototype.size = function(size) {
   *
 	* @param {boolean} brushable -	true/false if the nomogram will be brushable
   */
-d3.nomogram.prototype.brushable = function(brushable) {
+Nomogram.prototype.brushable = function(brushable) {
 	this.isBrushable = brushable;
 
 	return this;
@@ -438,7 +438,7 @@ d3.nomogram.prototype.brushable = function(brushable) {
   *
 	* @param {function} [color = "lightblue"] - Function defining how to color each line
   */
-d3.nomogram.prototype.color = function(color) {
+Nomogram.prototype.color = function(color) {
 	this.colorFunc = color || "lightblue";
 
 	return this;
@@ -450,7 +450,7 @@ d3.nomogram.prototype.color = function(color) {
   *
 	* @param {number} [width = 1] - Value or function defining how wide each line is
   */
-d3.nomogram.prototype.strokeWidth = function(width) {
+Nomogram.prototype.strokeWidth = function(width) {
 	if (width) {
 		this.strokeSize = width;
 	} else {
@@ -466,7 +466,7 @@ d3.nomogram.prototype.strokeWidth = function(width) {
   *
 	* @param {number} [opacity = 1] - Value or function [0,1] defining how opaque each line is
   */
-d3.nomogram.prototype.opacity = function(opacity) {
+Nomogram.prototype.opacity = function(opacity) {
 	if (opacity || opacity === 0) {
 		this.defaultOpacity = opacity;
 	} else {
@@ -483,7 +483,7 @@ d3.nomogram.prototype.opacity = function(opacity) {
   *
 	* @param {number} [opacity = 0.1]	- Value or function [0,1] defining how opaque each line is when filter applied
   */
-d3.nomogram.prototype.filteredOpacity = function(opacity) {
+Nomogram.prototype.filteredOpacity = function(opacity) {
 	if (opacity || opacity === 0) {
 		this.filteredItemOpacity = opacity;
 	} else {
@@ -502,7 +502,7 @@ d3.nomogram.prototype.filteredOpacity = function(opacity) {
 	* @param {number} margins.left = 30 - Left Margin
 	* @param {number} margins.right = 30 - Right Margin
   */
-d3.nomogram.prototype.margins = function(margins) {
+Nomogram.prototype.margins = function(margins) {
 	if (margins) {
 		this.plotMargins = margins;
 	} else {
