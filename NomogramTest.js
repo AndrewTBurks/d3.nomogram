@@ -1,5 +1,4 @@
-/* global d3.nomogram */
-/* global d3 */
+/* global Nomogram */
 
 let myData = [
 	{
@@ -34,7 +33,7 @@ let myData = [
 	}
 ];
 
-let myPCP = new d3.nomogram()
+let myNomogram = new Nomogram()
 	.data(myData)
 	.target("#myDiv")
 	.size({
