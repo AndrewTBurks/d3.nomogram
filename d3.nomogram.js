@@ -237,7 +237,7 @@ Nomogram.prototype.draw = function() {
 			_this.axes.selectAll(".brush")
 				.data(axesSpec).enter()
 			.append("g")
-				.attr("class", "Vbrush")
+				.attr("class", "brush")
 				.each((d, i, nodes) => {
 					d3.brushY()
 						.on("brush", brushed)

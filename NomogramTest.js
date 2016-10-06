@@ -53,6 +53,12 @@ let myNomogram = new Nomogram()
 	],
 	// "reduce")
 	"alter")
+	.margins({
+		top: 50,
+		bottom: 20,
+		left: 30,
+		right: 30
+	})
 	.color("red")
 	.opacity(0.6)
 	.filteredOpacity(0.2)
