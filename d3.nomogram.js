@@ -24,6 +24,7 @@ function Nomogram() {
 	this.plotAxes = null;
 	this.customAxesMode = "reduce";
 	this.rangeShrinkMode = "shrinkAxis";
+	this.axisTitlePosition = "top";
 
 	this.isBrushable = false;
 	this.filters = {}; // filters used if brushing is enabled
@@ -236,7 +237,13 @@ Nomogram.prototype.draw = function() {
 			.each((d, i, nodes) => {
 				d3.select(nodes[i]).append("text")
 					.text(d.name)
-					.attr("y", margin.top - 12)
+					.attr("y", () => {
+						if (_this.axisTitlePosition === "bottom") {
+							return height - margin.bottom + 22;
+						}
+
+						return margin.top - 12;
+					})
 					.attr("class", "axis-title")
 					.style("font-size", 12)
 					.style("font-family", "sans-serif")
@@ -522,6 +529,17 @@ Nomogram.prototype.margins = function(margins) {
 	} else {
 		this.plotMargins = null;
 	}
+
+	return this;
+};
+
+/**
+  * Set the location of axis titles
+  *
+	* @param {string} [position = top] - Position of titles "top", or "bottom"
+  */
+Nomogram.prototype.titlePosition = function(position) {
+	this.axisTitlePosition = position || "top";
 
 	return this;
 };

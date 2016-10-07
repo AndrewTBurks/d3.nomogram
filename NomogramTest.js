@@ -50,15 +50,14 @@ let myNomogram = new Nomogram()
 			name: "Word1",
 			rangeShrink: [0.5, 0.9]
 		}
-	],
-	// "reduce")
-	"alter", "shrinkAxis")
+	], "alter", "shrinkAxis")
 	.margins({
-		top: 50,
-		bottom: 20,
+		top: 20,
+		bottom: 50,
 		left: 30,
 		right: 30
 	})
+	.titlePosition("bottom")
 	.color("red")
 	.opacity(0.6)
 	.filteredOpacity(0.2)

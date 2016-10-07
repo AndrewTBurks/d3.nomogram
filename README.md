@@ -17,6 +17,7 @@ Nomogram
     * [.opacity([opacity])](#Nomogram+opacity)
     * [.filteredOpacity([opacity])](#Nomogram+filteredOpacity)
     * [.margins([margins])](#Nomogram+margins)
+    * [.titlePosition([position])](#Nomogram+titlePosition)
 
 <a name="Nomogram+draw"></a>
 
@@ -142,4 +143,15 @@ Set the margins around the nomogram within the drawing space
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [margins] | <code>object</code> | <code>{top: 50, bottom: 20, left: 30, right: 30}</code> | Object specifying margins |
+
+<a name="Nomogram+titlePosition"></a>
+
+### nomogram.titlePosition([position])
+Set the location of axis titles
+
+**Kind**: instance method of <code>[Nomogram](#Nomogram)</code>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [position] | <code>string</code> | <code>&quot;top&quot;</code> | Position of titles "top", or "bottom" |
 
