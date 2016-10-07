@@ -43,8 +43,8 @@ let myNomogram = new Nomogram()
 	.setAxes([
 		{
 			name: "Thing1",
-			domain: [2, 5]
-			// rangeShrink: [0.25, 0.5]
+			// domain: [2, 5]
+			rangeShrink: [0, 0.5]
 		},
 		{
 			name: "Word1",
@@ -52,7 +52,7 @@ let myNomogram = new Nomogram()
 		}
 	],
 	// "reduce")
-	"alter")
+	"alter", "shrinkAxis")
 	.margins({
 		top: 50,
 		bottom: 20,

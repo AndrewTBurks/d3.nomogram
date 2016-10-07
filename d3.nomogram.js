@@ -1,4 +1,4 @@
-// Parallel coordinate plot library on top of d3.js
+// Nomogram library on top of d3.js
 // To keep similar to d3.js style, all methods return "this"
 //
 // Author: Andrew Burks <andrewtburks@gmail.com>
@@ -22,7 +22,8 @@ function Nomogram() {
 	this.strokeSize = 1;
 
 	this.plotAxes = null;
-	this.customAxesMode = null;
+	this.customAxesMode = "reduce";
+	this.rangeShrinkMode = "shrinkAxis";
 
 	this.isBrushable = false;
 	this.filters = {}; // filters used if brushing is enabled
@@ -168,10 +169,22 @@ Nomogram.prototype.draw = function() {
 				let domainSize = (el.domain[1] - el.domain[0]) / (el.rangeShrink[1] - el.rangeShrink[0]);
 				let newDomainStart = el.domain[0] - (domainSize * el.rangeShrink[0]);
 
+				let axisHeight = height - margin.bottom - margin.top;
 
-				scale = d3.scaleLinear()
-					.domain([newDomainStart, newDomainStart + domainSize])
-					.range([(height - margin.bottom), margin.top]);
+
+				scale = d3.scaleLinear();
+
+				if (_this.rangeShrinkMode === "shrinkAxis") {
+					scale
+						.domain(el.domain)
+						.range([((height - margin.bottom) - axisHeight * el.rangeShrink[0]), ((height - margin.bottom) - axisHeight * el.rangeShrink[1])]);
+
+				} else if (_this.rangeShrinkMode === "shrinkRange") {
+					scale
+						.domain([newDomainStart, newDomainStart + domainSize])
+						.range([(height - margin.bottom), margin.top]);
+				}
+
 
 				el.axisCall = d3.axisLeft(scale)
 					.ticks(10);
@@ -185,15 +198,18 @@ Nomogram.prototype.draw = function() {
 				});
 
 				// if there is a custom range then add dummy elements to domain to shift the scale
-				if (el.rangeShrink[0] > 0) {
-					el.domain.unshift("");
-					range.unshift(height - margin.bottom);
+				if (_this.rangeShrinkMode === "shrinkRange") {
+					if (el.rangeShrink[0] > 0) {
+						el.domain.unshift("");
+						range.unshift(height - margin.bottom);
+					}
+					if (el.rangeShrink[1] < 1) {
+						el.domain.push("");
+						range.push(margin.top);
+					}
+				} else if (_this.rangeShrinkMode === "shrinkAxis") {
+					// leave range and domain unchanged
 				}
-				if (el.rangeShrink[1] < 1) {
-					el.domain.push("");
-					range.push(margin.top);
-				}
-
 
 				scale = d3.scaleOrdinal()
 					.domain(el.domain)
@@ -243,8 +259,8 @@ Nomogram.prototype.draw = function() {
 						.on("brush", brushed)
 						.on("end", brushended)
 						.extent([
-							[(margin.left + axisSpacing * i) - 10, margin.top],
-							[(margin.left + axisSpacing * i) + 10, height - margin.bottom]
+							[(margin.left + axisSpacing * i) - 10, d3.extent(axesScales[d.name].range())[0]],
+							[(margin.left + axisSpacing * i) + 10, d3.extent(axesScales[d.name].range())[1]]
 						])(d3.select(nodes[i]));
 				});
 		}
@@ -291,14 +307,14 @@ Nomogram.prototype.draw = function() {
 			let inFilter = true;
 
 			axesSpec.forEach((s) => {
-				let domain = s.domain;
+				let domain = d3.extent(s.domain);
 
 				if (s.type === "linear") {
 					if (el[s.name] < domain[0] || el[s.name] > domain[1]) {
 						inFilter = false;
 					}
 				} else if (s.type === "ordinal") {
-					if (domain.indexOf(el[s.name]) === -1) {
+					if (s.domain.indexOf(el[s.name]) === -1) {
 						inFilter = false;
 					}
 				}
@@ -367,9 +383,10 @@ Nomogram.prototype.data = function(data) {
   * Set the axes of the data that will be drawn
   *
   * @param {array} [axes = null] - An array of axes to be used
-	* @param {string} [mode = reduce] - The mode which the custom axes is using "alter" or "reduce"
+	* @param {string} [axesMode = reduce] - The mode which the custom axes is using "alter" or "reduce"
+	* @param {string} [shrinkMode = shrinkAxis] - The mode which the custom axes is using "shrinkAxis" or "shrinkRange"
   */
-Nomogram.prototype.setAxes = function(axes, mode) {
+Nomogram.prototype.setAxes = function(axes, axesMode, shrinkMode) {
 	// axes must be array of objects of this type
 	/* OBJECT: [] := optional items
 		{
@@ -383,7 +400,8 @@ Nomogram.prototype.setAxes = function(axes, mode) {
 	this.plotAxes = axes || null;
 
 	// "alter" changes specified axes, "reduce" only draws specified axes
-	this.customAxesMode = mode || "reduce";
+	this.customAxesMode = axesMode || "reduce";
+	this.rangeShrinkMode = shrinkMode || "shrinkAxis";
 
 	return this;
 };

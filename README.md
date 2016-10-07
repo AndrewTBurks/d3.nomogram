@@ -8,7 +8,7 @@ Nomogram
 * [Nomogram](#Nomogram)
     * [.draw()](#Nomogram+draw)
     * [.data(data)](#Nomogram+data)
-    * [.setAxes([axes], [mode])](#Nomogram+setAxes)
+    * [.setAxes([axes], [axesMode], [shrinkMode])](#Nomogram+setAxes)
     * [.target([targetID])](#Nomogram+target)
     * [.size([size])](#Nomogram+size)
     * [.brushable(brushable)](#Nomogram+brushable)
@@ -37,7 +37,7 @@ Set the data that will be used in the plots
 
 <a name="Nomogram+setAxes"></a>
 
-### nomogram.setAxes([axes], [mode])
+### nomogram.setAxes([axes], [axesMode], [shrinkMode])
 Set the axes of the data that will be drawn
 
 **Kind**: instance method of <code>[Nomogram](#Nomogram)</code>  
@@ -45,7 +45,8 @@ Set the axes of the data that will be drawn
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [axes] | <code>array</code> | <code></code> | An array of axes to be used |
-| [mode] | <code>string</code> | <code>&quot;reduce&quot;</code> | The mode which the custom axes is using "alter" or "reduce" |
+| [axesMode] | <code>string</code> | <code>&quot;reduce&quot;</code> | The mode which the custom axes is using "alter" or "reduce" |
+| [shrinkMode] | <code>string</code> | <code>&quot;shrinkAxis&quot;</code> | The mode which the custom axes is using "shrinkAxis" or "shrinkRange" |
 
 <a name="Nomogram+target"></a>
 
