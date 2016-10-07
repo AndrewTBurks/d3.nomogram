@@ -96,6 +96,7 @@ Nomogram.prototype.draw = function() {
 				let obj = {};
 
 				obj.name = el.name; // must have a name
+				obj.label = el.label || el.name; // defaults to name
 				obj.type = el.type || getAxisScaleType(this.plotData[0][obj.name]);
 				obj.domain = el.domain || calculateAxisExtent(this.plotData.map(el => el[obj.name]), obj.type);
 				// range used to shrink ordinal scales to be smaller than the
@@ -110,6 +111,7 @@ Nomogram.prototype.draw = function() {
 			props.forEach((key) => {
 				let axisObject = {
 					name: key,
+					label: key,
 					type: getAxisScaleType(this.plotData[0][key])
 				};
 
@@ -125,6 +127,7 @@ Nomogram.prototype.draw = function() {
 					});
 
 					if (index !== -1) {
+						axesSpec[index].label = el.label;
 						axesSpec[index].type = el.type ||
 							getAxisScaleType(this.plotData[0][axesSpec[index].name]); // default value
 						axesSpec[index].domain = el.domain ||
@@ -236,7 +239,7 @@ Nomogram.prototype.draw = function() {
 			})
 			.each((d, i, nodes) => {
 				d3.select(nodes[i]).append("text")
-					.text(d.name)
+					.text(d.label || d.name)
 					.attr("y", () => {
 						if (_this.axisTitlePosition === "bottom") {
 							return height - margin.bottom + 22;

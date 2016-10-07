@@ -43,11 +43,13 @@ let myNomogram = new Nomogram()
 	.setAxes([
 		{
 			name: "Thing1",
+			// label: "Custom Label",
 			// domain: [2, 5]
 			rangeShrink: [0, 0.5]
 		},
 		{
 			name: "Word1",
+			label: "I Am A Custom Label",
 			rangeShrink: [0.5, 0.9]
 		}
 	], "alter", "shrinkAxis")
