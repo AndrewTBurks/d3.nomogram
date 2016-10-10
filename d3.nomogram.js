@@ -30,6 +30,9 @@ function Nomogram() {
 	this.filters = {}; // filters used if brushing is enabled
 	this.filteredItemOpacity = 0.1;
 
+	this.onMouseOutFunc = null;
+	this.onMouseOverFunc = null;
+
 	this.plotTarget = "body";
 	this.svg = null;
 
@@ -364,7 +367,9 @@ Nomogram.prototype.draw = function() {
 			.style("stroke", _this.colorFunc)
 			.style("stroke-width", _this.strokeSize)
 			.style("stroke-opacity", _this.defaultOpacity)
-			.style("fill", "none");
+			.style("fill", "none")
+			.on("mouseover", _this.onMouseOverFunc)
+			.on("mouseout", _this.onMouseOutFunc);
 	}
 
 	function calculatePath(d) {
@@ -543,6 +548,76 @@ Nomogram.prototype.margins = function(margins) {
   */
 Nomogram.prototype.titlePosition = function(position) {
 	this.axisTitlePosition = position || "top";
+
+	return this;
+};
+
+/**
+  * Set the location of axis titles
+  *
+	* @param {string} preset - Choice of a preset function or custom
+	* @param {function} [fnc] - Function defining behavior on "mouseover" of lines
+  */
+Nomogram.prototype.onMouseOver = function(preset, fnc) {
+
+	let _this = this;
+
+	let presetFunctions = {};
+
+	// hide-other function
+	presetFunctions["hide-other"] = function() {
+		_this.lines.selectAll(".dataPath")
+			.style("stroke-opacity", 0.1);
+
+		d3.select(this)
+			.style("stroke-opacity", 1);
+
+	};
+
+	if (preset) {
+		if (preset === "custom") {
+			_this.onMouseOverFunc = fnc;
+		} else {
+			_this.onMouseOverFunc = presetFunctions[preset];
+		}
+	} else {
+		_this.onMouseOverFunc = null;
+	}
+
+	return this;
+};
+
+/**
+  * Set the location of axis titles
+  *
+	* @param {string} preset - Choice of a preset function or custom
+	* @param {function} [fnc] - Function defining behavior on "mouseout" of lines
+  */
+Nomogram.prototype.onMouseOut = function(preset, fnc) {
+
+	let _this = this;
+
+	let presetFunctions = {};
+
+	// reset-paths function
+	presetFunctions["reset-paths"] = function() {
+		_this.lines.selectAll(".dataPath")
+			.style("stroke-linecap", "round")
+			.style("stroke", _this.colorFunc)
+			.style("stroke-width", _this.strokeSize)
+			.style("stroke-opacity", _this.defaultOpacity)
+			.style("fill", "none");
+	};
+
+	if (preset) {
+		if (preset === "custom") {
+			_this.onMouseOutFunc = fnc;
+		} else {
+			_this.onMouseOutFunc = presetFunctions[preset];
+		}
+	} else {
+		_this.onMouseOutFunc = null;
+	}
 
 	return this;
 };

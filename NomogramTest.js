@@ -1,4 +1,5 @@
 /* global Nomogram */
+/* global d3 */
 
 let myData = [
 	{
@@ -65,4 +66,6 @@ let myNomogram = new Nomogram()
 	.filteredOpacity(0.2)
 	.strokeWidth(5)
 	.brushable(true)
+	.onMouseOver("hide-other")
+	.onMouseOut("reset-paths")
 	.draw();
