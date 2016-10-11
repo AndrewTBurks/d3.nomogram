@@ -25,9 +25,14 @@ function Nomogram() {
 	this.customAxesMode = "reduce";
 	this.rangeShrinkMode = "shrinkAxis";
 	this.axisTitlePosition = "top";
+	this.axisTitleFontSize = 10;
+	this.axisTickFontSize = 8;
+
 
 	this.isBrushable = false;
 	this.filters = {}; // filters used if brushing is enabled
+	this.dataFilteringFunction = null;
+
 	this.filteredItemOpacity = 0.1;
 
 	this.onMouseOutFunc = null;
@@ -241,23 +246,28 @@ Nomogram.prototype.draw = function() {
 				return "translate(" + (margin.left + axisSpacing * i) + ", 0)";
 			})
 			.each((d, i, nodes) => {
+				d.axisCall(d3.select(nodes[i]));
+			})
+		.selectAll("text")
+			.style("font-size", _this.axisTickFontSize);
+
+		_this.axes.selectAll(".nomogram-axis")
+			.each((d, i, nodes) => {
 				d3.select(nodes[i]).append("text")
 					.text(d.label || d.name)
 					.attr("y", () => {
 						if (_this.axisTitlePosition === "bottom") {
-							return height - margin.bottom + 22;
+							return height - margin.bottom + _this.axisTitleFontSize + 10;
 						}
 
-						return margin.top - 12;
+						return margin.top - _this.axisTitleFontSize;
 					})
 					.attr("class", "axis-title")
-					.style("font-size", 12)
+					.style("font-size", _this.axisTitleFontSize)
 					.style("font-family", "sans-serif")
 					.style("text-anchor", "middle")
 					.style("fill", "black");
-
-				d.axisCall(d3.select(nodes[i]));
-			});
+				});
 
 		if (_this.isBrushable) {
 
@@ -279,28 +289,30 @@ Nomogram.prototype.draw = function() {
 		}
 
 		function brushed(d) {
-			// TODO: Create brushing filtering and update lines
 			let extent = d3.event.selection;
 
 			_this.filters[d.name] = extent;
 
 			_this.lines.selectAll(".dataPath")
-				.style("stroke-opacity", (d) => dataInFilter(d));
+				.style("stroke-opacity", (d) => {
+					return _this.dataFilteringFunction(d) ? _this.defaultOpacity : _this.filteredItemOpacity;
+				});
 		}
 
 		function brushended(d) {
-			// TODO: Create brushing filtering and update lines
 			if (!d3.event.selection) {
 				// clear this filter
 				delete _this.filters[d.name];
 
 				_this.lines.selectAll(".dataPath")
-					.style("stroke-opacity", (d) => dataInFilter(d));
+					.style("stroke-opacity", (d) => {
+						return _this.dataFilteringFunction(d) ? _this.defaultOpacity : _this.filteredItemOpacity;
+					});
 			}
 
 		}
 
-		function dataInFilter(d) {
+		_this.dataFilteringFunction = function (d) {
 			let accepted = true;
 
 			// return the opacity of the line based on whether or not the data is filtered out
@@ -311,7 +323,7 @@ Nomogram.prototype.draw = function() {
 				}
 			});
 
-			return accepted ? _this.defaultOpacity : _this.filteredItemOpacity;
+			return accepted;
 		}
 	}
 
@@ -605,7 +617,9 @@ Nomogram.prototype.onMouseOut = function(preset, fnc) {
 			.style("stroke-linecap", "round")
 			.style("stroke", _this.colorFunc)
 			.style("stroke-width", _this.strokeSize)
-			.style("stroke-opacity", _this.defaultOpacity)
+			.style("stroke-opacity", (d) => {
+				return _this.dataFilteringFunction(d) ? _this.defaultOpacity : _this.filteredItemOpacity;
+			})
 			.style("fill", "none");
 	};
 
@@ -621,3 +635,23 @@ Nomogram.prototype.onMouseOut = function(preset, fnc) {
 
 	return this;
 };
+
+Nomogram.prototype.titleFontSize = function(size) {
+	if (size) {
+		this.axisTitleFontSize = size;
+	} else {
+		this.axisTitleFontSize = 10;
+	}
+
+	return this;
+}
+
+Nomogram.prototype.tickFontSize = function(size) {
+	if (size) {
+		this.axisTickFontSize = size;
+	} else {
+		this.axisTickFontSize = 8;
+	}
+
+	return this;
+}

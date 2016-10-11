@@ -34,6 +34,7 @@ let myData = [
 	}
 ];
 
+// set up basic nomogram with data, target, size and margins defined
 let myNomogram = new Nomogram()
 	.data(myData)
 	.target("#myDiv")
@@ -41,6 +42,15 @@ let myNomogram = new Nomogram()
 		width: 1000,
 		height: 400
 	})
+	.margins({
+		top: 20,
+		bottom: 50,
+		left: 30,
+		right: 30
+	});
+
+// customize axes of nomogram
+myNomogram
 	.setAxes([
 		{
 			name: "Thing1",
@@ -54,18 +64,27 @@ let myNomogram = new Nomogram()
 			rangeShrink: [0.5, 0.9]
 		}
 	], "alter", "shrinkAxis")
-	.margins({
-		top: 20,
-		bottom: 50,
-		left: 30,
-		right: 30
-	})
 	.titlePosition("bottom")
-	.color("red")
-	.opacity(0.6)
-	.filteredOpacity(0.2)
 	.strokeWidth(5)
+	.titleFontSize(20)
+	.tickFontSize(15);
+
+// set style of nomogram (color and opacity of lines)
+myNomogram
+	.color("red")
+	.opacity(0.6);
+
+// set up brushing of nomogram
+myNomogram
+	.filteredOpacity(0.2)
 	.brushable(true)
+
+// set mouseover and mouseout functions for nomogram (using premade functions)
+myNomogram
 	.onMouseOver("hide-other")
-	.onMouseOut("reset-paths")
+	.onMouseOut("reset-paths");
+
+
+// draw Nomogram with all of the custom settings
+myNomogram
 	.draw();
