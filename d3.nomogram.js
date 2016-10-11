@@ -324,7 +324,7 @@ Nomogram.prototype.draw = function() {
 			});
 
 			return accepted;
-		}
+		};
 	}
 
 	function filterDataByDomains(data) {
@@ -636,6 +636,11 @@ Nomogram.prototype.onMouseOut = function(preset, fnc) {
 	return this;
 };
 
+/**
+  * Set the title font size for the axes
+  *
+	* @param {number} [size = 10] - Size of axis title font
+  */
 Nomogram.prototype.titleFontSize = function(size) {
 	if (size) {
 		this.axisTitleFontSize = size;
@@ -644,8 +649,14 @@ Nomogram.prototype.titleFontSize = function(size) {
 	}
 
 	return this;
-}
+};
 
+
+/**
+  * Set the tick font size for the axes
+  *
+	* @param {number} [size = 8] - Size of axis tick font
+  */
 Nomogram.prototype.tickFontSize = function(size) {
 	if (size) {
 		this.axisTickFontSize = size;
@@ -654,4 +665,4 @@ Nomogram.prototype.tickFontSize = function(size) {
 	}
 
 	return this;
-}
+};

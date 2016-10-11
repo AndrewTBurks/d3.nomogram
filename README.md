@@ -18,6 +18,10 @@ Nomogram
     * [.filteredOpacity([opacity])](#Nomogram+filteredOpacity)
     * [.margins([margins])](#Nomogram+margins)
     * [.titlePosition([position])](#Nomogram+titlePosition)
+    * [.onMouseOver(preset, [fnc])](#Nomogram+onMouseOver)
+    * [.onMouseOut(preset, [fnc])](#Nomogram+onMouseOut)
+    * [.titleFontSize([size])](#Nomogram+titleFontSize)
+    * [.tickFontSize([size])](#Nomogram+tickFontSize)
 
 <a name="Nomogram+draw"></a>
 
@@ -155,3 +159,48 @@ Set the location of axis titles
 | --- | --- | --- | --- |
 | [position] | <code>string</code> | <code>&quot;top&quot;</code> | Position of titles "top", or "bottom" |
 
+<a name="Nomogram+onMouseOver"></a>
+
+### nomogram.onMouseOver(preset, [fnc])
+Set the location of axis titles
+
+**Kind**: instance method of <code>[Nomogram](#Nomogram)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| preset | <code>string</code> | Choice of a preset function or custom |
+| [fnc] | <code>function</code> | Function defining behavior on "mouseover" of lines |
+
+<a name="Nomogram+onMouseOut"></a>
+
+### nomogram.onMouseOut(preset, [fnc])
+Set the location of axis titles
+
+**Kind**: instance method of <code>[Nomogram](#Nomogram)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| preset | <code>string</code> | Choice of a preset function or custom |
+| [fnc] | <code>function</code> | Function defining behavior on "mouseout" of lines |
+
+<a name="Nomogram+titleFontSize"></a>
+
+### nomogram.titleFontSize([size])
+Set the title font size for the axes
+
+**Kind**: instance method of <code>[Nomogram](#Nomogram)</code>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [size] | <code>number</code> | <code>10</code> | Size of axis title font |
+
+<a name="Nomogram+tickFontSize"></a>
+
+### nomogram.tickFontSize([size])
+Set the tick font size for the axes
+
+**Kind**: instance method of <code>[Nomogram](#Nomogram)</code>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [size] | <code>number</code> | <code>8</code> | Size of axis tick font |
