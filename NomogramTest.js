@@ -76,7 +76,7 @@ myNomogram
 
 // set up brushing of nomogram
 myNomogram
-	.filteredOpacity(0.2)
+	.filteredOpacity(0)
 	.brushable(true);
 
 // set mouseover and mouseout functions for nomogram (using premade functions)
