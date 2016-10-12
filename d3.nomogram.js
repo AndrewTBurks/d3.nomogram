@@ -581,7 +581,7 @@ Nomogram.prototype.onMouseOver = function(preset, fnc) {
 
 		if (_this.dataFilteringFunction(d3.select(this).datum())) {
 			_this.lines.selectAll(".dataPath")
-				.style("stroke-opacity", _this.filteredOpacity);
+				.style("stroke-opacity", _this.filteredItemOpacity);
 
 			d3.select(this)
 				.style("stroke-opacity", 1);
