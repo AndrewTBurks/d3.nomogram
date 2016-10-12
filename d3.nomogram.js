@@ -578,12 +578,15 @@ Nomogram.prototype.onMouseOver = function(preset, fnc) {
 
 	// hide-other function
 	presetFunctions["hide-other"] = function() {
-		_this.lines.selectAll(".dataPath")
-			.style("stroke-opacity", 0.1);
 
-		d3.select(this)
-			.style("stroke-opacity", 1);
+		if (_this.dataFilteringFunction(d3.select(this).datum())) {
+			_this.lines.selectAll(".dataPath")
+				.style("stroke-opacity", 0.1);
 
+			d3.select(this)
+				.style("stroke-opacity", 1);
+
+		}
 	};
 
 	if (preset) {

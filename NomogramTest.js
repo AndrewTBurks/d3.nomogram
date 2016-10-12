@@ -1,5 +1,5 @@
 /* global Nomogram */
-/* global d3 */
+// /* global d3 */
 
 let myData = [
 	{
@@ -77,7 +77,7 @@ myNomogram
 // set up brushing of nomogram
 myNomogram
 	.filteredOpacity(0.2)
-	.brushable(true)
+	.brushable(true);
 
 // set mouseover and mouseout functions for nomogram (using premade functions)
 myNomogram
