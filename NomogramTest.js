@@ -4,31 +4,31 @@
 let myData = [
 	{
 		Thing1: 1,
-		Thing2: 2,
+		Thing2: "2",
 		Word1: "hello",
 		Thing3: 6
 	},
 	{
 		Thing1: 3,
-		Thing2: 2,
+		Thing2: "2",
 		Word1: "yes",
 		Thing3: 4
 	},
 	{
 		Thing1: 4,
-		Thing2: 1,
+		Thing2: "2",
 		Word1: "hello",
 		Thing3: 2
 	},
 	{
 		Thing1: 10,
-		Thing2: -3,
+		Thing2: "2",
 		Word1: "wow",
 		Thing3: -1
 	},
 	{
 		Thing1: 8,
-		Thing2: -4,
+		Thing2: "2",
 		Word1: "Chihua",
 		Thing3: 5
 	}
