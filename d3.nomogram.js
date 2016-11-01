@@ -110,13 +110,10 @@ Nomogram.prototype.draw = function() {
 				// range used to shrink ordinal scales to be smaller than the
 				obj.rangeShrink = el.rangeShrink || [0, 1];
 
-				console.log("Checking all values same", obj.name);
 				if (allValuesSame(this.plotData.map((d) => d[obj.name]))) {
 					if (obj.type === "linear") {
-						console.log("Altering linear scale domain");
 						obj.domain = [0, 2 * this.plotData[0][obj.name]];
 					} else if (obj.type === "ordinal") {
-						console.log("Altering ordinal scale domain");
 						obj.rangeShrink = [0.5, 0.5];
 					}
 				}
@@ -159,17 +156,14 @@ Nomogram.prototype.draw = function() {
 			}
 
 			props.forEach(key => {
-				console.log("Checking all values same", key);
 				if (allValuesSame(this.plotData.map((d) => d[key]))) {
 					let index = axesSpec.findIndex((el) => {
 						return el.name === key;
 					});
 
 					if (axesSpec[index].type === "linear") {
-						console.log("Altering linear scale domain");
 						axesSpec[index].domain = [0, 2 * this.plotData[0][axesSpec[index].name]];
 					} else if (axesSpec[index].type === "ordinal") {
-						console.log("Altering ordinal scale domain");
 						axesSpec[index].domain = ["", this.plotData[0][axesSpec[index].name], ""];
 					}
 				}
