@@ -29,7 +29,8 @@
 		"lint": "eslint --fix d3.nomogram.js",
 		"doc": "jsdoc2md \"d3.nomogram.js\" > README.md",
 		"in": "npm install",
-		"indev": "npm install --dev"
+		"indev": "npm install --dev",
+		"push-both": "git push origin master | git checkout gh-pages | git merge master | git push origin gh-pages | git checkout master"
 	},
   "license": [
     {
