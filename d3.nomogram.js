@@ -114,7 +114,6 @@ Nomogram.prototype.draw = function() {
 					if (obj.type === "linear") {
 						obj.domain = [0, 2 * this.plotData[0][obj.name]];
 					} else if (obj.type === "ordinal") {
-						obj.rangeShrink = [0.5, 0.5];
 						obj.domain = ["", this.plotData[0][obj.name], ""];
 					}
 				}
