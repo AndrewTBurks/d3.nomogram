@@ -179,7 +179,6 @@ Nomogram.prototype.draw = function() {
 	}
 
 	function allValuesSame(arr) {
-		console.log("Checking same", arr);
 		for (let i = 0; i < arr.length; i++) {
 			if (arr[i] !== arr[0]) {
 				return false;
