@@ -110,7 +110,7 @@ Nomogram.prototype.draw = function() {
 				// range used to shrink ordinal scales to be smaller than the
 				obj.rangeShrink = el.rangeShrink || [0, 1];
 
-				if (allValuesSame(this.plotData.map((d) => d[obj.name]))) {
+				if (allValuesSame(this.plotData.map(d => d[obj.name])) && !el.domain) {
 					if (obj.type === "linear") {
 						obj.domain = [0, 2 * this.plotData[0][obj.name]];
 					} else if (obj.type === "ordinal") {
@@ -156,7 +156,8 @@ Nomogram.prototype.draw = function() {
 			}
 
 			props.forEach(key => {
-				if (allValuesSame(this.plotData.map((d) => d[key]))) {
+				if (allValuesSame(this.plotData.map((d) => d[key])) &&
+					!this.plotAxes[this.plotAxes.findIndex(a => a.name === key)]) {
 					let index = axesSpec.findIndex((el) => {
 						return el.name === key;
 					});
@@ -285,15 +286,21 @@ Nomogram.prototype.draw = function() {
 
 		_this.axes.selectAll(".nomogram-axis")
 			.each((d, i, nodes) => {
-				d3.select(nodes[i]).append("text")
-					.text(d.label || d.name)
-					.attr("y", () => {
+				d3.select(nodes[i]).append("g")
+					.attr("transform", () => {
+						let dy;
+
 						if (_this.axisTitlePosition === "bottom") {
-							return height - margin.bottom + _this.axisTitleFontSize + 10;
+							dy = height - margin.bottom + _this.axisTitleFontSize + 10;
+						} else {
+							dy = margin.top - _this.axisTitleFontSize;
 						}
 
-						return margin.top - _this.axisTitleFontSize;
+						return "translate(0," + dy + ")";
 					})
+				.append("text")
+					.text(d.label || d.name)
+					.attr("transform", "rotate(" + _this.axisTitleRotation + ")")
 					.attr("class", "axis-title")
 					.style("font-size", _this.axisTitleFontSize)
 					.style("font-family", "sans-serif")
@@ -689,6 +696,20 @@ Nomogram.prototype.titleFontSize = function(size) {
 	return this;
 };
 
+/**
+  * Set the axis title rotation
+  *
+	* @param {number} [size = 10] - Size of axis title font
+  */
+Nomogram.prototype.titleRotation = function(theta) {
+	if (theta) {
+		this.axisTitleRotation = theta;
+	} else {
+		this.axisTitleRotation = 10;
+	}
+
+	return this;
+};
 
 /**
   * Set the tick font size for the axes

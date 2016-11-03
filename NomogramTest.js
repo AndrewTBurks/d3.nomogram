@@ -59,6 +59,10 @@ myNomogram
 			rangeShrink: [0, 0.5]
 		},
 		{
+			name: "Thing2",
+			domain: ["2", "5"]
+		},
+		{
 			name: "Word1",
 			label: "I Am A Custom Label",
 			rangeShrink: [0.5, 0.9]
@@ -67,6 +71,7 @@ myNomogram
 	.titlePosition("bottom")
 	.strokeWidth(5)
 	.titleFontSize(20)
+	.titleRotation(-30)
 	.tickFontSize(15);
 
 // set style of nomogram (color and opacity of lines)
