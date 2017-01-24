@@ -34,14 +34,19 @@ let myData = [
 	}
 ];
 
+// when binding resize listener, call resize method of Nomogram
+window.addEventListener("resize", function() {
+	myNomogram.resize();
+});
+
 // set up basic nomogram with data, target, size and margins defined
 let myNomogram = new Nomogram()
 	.data(myData)
 	.target("#myDiv")
-	.size({
-		width: 1000,
-		height: 400
-	})
+	// .size({
+	// 	width: 1000,
+	// 	height: 400
+	// })
 	.margins({
 		top: 20,
 		bottom: 50,

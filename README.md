@@ -7,6 +7,7 @@ Nomogram
 
 * [Nomogram](#Nomogram)
     * [.draw()](#Nomogram+draw)
+    * [.resize()](#Nomogram+resize)
     * [.data(data)](#Nomogram+data)
     * [.setAxes([axes], [axesMode], [shrinkMode])](#Nomogram+setAxes)
     * [.target([targetID])](#Nomogram+target)
@@ -21,12 +22,19 @@ Nomogram
     * [.onMouseOver(preset, [fnc])](#Nomogram+onMouseOver)
     * [.onMouseOut(preset, [fnc])](#Nomogram+onMouseOut)
     * [.titleFontSize([size])](#Nomogram+titleFontSize)
+    * [.titleRotation([size])](#Nomogram+titleRotation)
     * [.tickFontSize([size])](#Nomogram+tickFontSize)
 
 <a name="Nomogram+draw"></a>
 
 ### nomogram.draw()
 Draw the nomogram
+
+**Kind**: instance method of <code>[Nomogram](#Nomogram)</code>  
+<a name="Nomogram+resize"></a>
+
+### nomogram.resize()
+Resize the nomogram based on either the specific size in plotSize, or target
 
 **Kind**: instance method of <code>[Nomogram](#Nomogram)</code>  
 <a name="Nomogram+data"></a>
@@ -194,6 +202,17 @@ Set the title font size for the axes
 | --- | --- | --- | --- |
 | [size] | <code>number</code> | <code>10</code> | Size of axis title font |
 
+<a name="Nomogram+titleRotation"></a>
+
+### nomogram.titleRotation([size])
+Set the axis title rotation
+
+**Kind**: instance method of <code>[Nomogram](#Nomogram)</code>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [size] | <code>number</code> | <code>10</code> | Size of axis title font |
+
 <a name="Nomogram+tickFontSize"></a>
 
 ### nomogram.tickFontSize([size])
@@ -204,3 +223,4 @@ Set the tick font size for the axes
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [size] | <code>number</code> | <code>8</code> | Size of axis tick font |
+

@@ -72,7 +72,15 @@ Nomogram.prototype.draw = function() {
 	if (!this.plotSize) {
 		// get size from target element
 		width = d3.select(this.plotTarget).node().clientWidth;
+
+		// if it is an element with 0 width, give it a default width of 500
+		width = width || 500;
+
 		height = d3.select(this.plotTarget).node().clientHeight;
+
+		// if it is an element with 0 height, give it a starting height proportial
+		// to width
+		height = height || width * 0.4;
 	} else {
 		// use specified size
 		width = this.plotSize.width;
@@ -430,6 +438,37 @@ Nomogram.prototype.draw = function() {
 
 		return "M" + points.join("L");
 	}
+
+	return this;
+};
+
+
+/**
+  * Resize the nomogram based on either the specific size in plotSize, or target
+  */
+Nomogram.prototype.resize = function() {
+	let width, height;
+
+	if (!this.plotSize) {
+		// get size from target element
+		width = d3.select(this.plotTarget).node().clientWidth;
+
+		// if it is an element with 0 width, give it a default width of 500
+		width = width || 500;
+
+		height = d3.select(this.plotTarget).node().clientHeight;
+
+		// if it is an element with 0 height, give it a starting height proportial
+		// to width
+		height = height || width * 0.4;
+	} else {
+		// use specified size
+		width = this.plotSize.width;
+		height = this.plotSize.height;
+	}
+
+	this.svg.attr("width", width)
+		.attr("height", height);
 
 	return this;
 };
