@@ -103,8 +103,8 @@ Nomogram.prototype.draw = function() {
   } else {
       let box = this.svg.attr("viewBox").split(" ").map((d) => parseInt(d));
 
-      width = box[3];
-      height = box[4];
+      width = box[2];
+      height = box[3];
   }
 
 	this.svg
