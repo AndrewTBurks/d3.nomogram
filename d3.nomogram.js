@@ -56,6 +56,7 @@ Nomogram.prototype.draw = function() {
 	let _this = this;
 
 	let width, height;
+	let svgWidth, svgHeight;
 
 	let margin = this.plotMargins || {
 		top: 50,
@@ -71,36 +72,44 @@ Nomogram.prototype.draw = function() {
 
 	if (!this.plotSize) {
 		// get size from target element
-		width = d3.select(this.plotTarget).node().clientWidth;
+        svgWidth = d3.select(this.plotTarget).node().clientWidth;
 
 		// if it is an element with 0 width, give it a default width of 500
-		width = width || 500;
+        svgWidth = svgWidth || 500;
 
-		height = d3.select(this.plotTarget).node().clientHeight;
+        svgHeight = d3.select(this.plotTarget).node().clientHeight;
 
 		// if it is an element with 0 height, give it a starting height proportial
 		// to width
-		height = height || width * 0.4;
+        svgHeight = svgHeight || svgWidth * 0.4;
 	} else {
 		// use specified size
-		width = this.plotSize.width;
-		height = this.plotSize.height;
+        svgWidth = this.plotSize.width;
+        svgHeight = this.plotSize.height;
 	}
 
-		// if drawing for first time, create svg
-	if (!this.svg) {
-		this.svg = d3.select(this.plotTarget)
-			.append("svg")
-			.attr("viewBox", "0 0 " + width + " " + height)
-			.attr("class", "Nomogram.svg");
+	// if drawing for first time, create svg
+  if (!this.svg) {
+      this.svg = d3.select(this.plotTarget)
+          .append("svg")
+          .attr("viewBox", "0 0 " + svgWidth + " " + svgHeight)
+          .attr("class", "Nomogram.svg");
 
-		this.lines = this.svg.append("g");
-		this.axes = this.svg.append("g");
-	}
+      this.lines = this.svg.append("g");
+      this.axes = this.svg.append("g");
+
+      width = svgWidth;
+      height = svgHeight;
+  } else {
+      let box = this.svg.attr("viewBox").split(" ").map((d) => parseInt(d));
+
+      width = box[3];
+      height = box[4];
+  }
 
 	this.svg
-		.attr("width", width)
-		.attr("height", height);
+		.attr("width", svgWidth)
+		.attr("height", svgHeight);
 
 	// draw nomogram
 	if (this.plotData && this.plotData.length > 0) {
