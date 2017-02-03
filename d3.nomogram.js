@@ -334,13 +334,17 @@ Nomogram.prototype.draw = function() {
 			.append("g")
 				.attr("class", "brush")
 				.each((d, i, nodes) => {
-					d3.brushY()
+					let brush = d3.brushY()
 						.on("brush", brushed)
 						.on("end", brushended)
 						.extent([
 							[(margin.left + axisSpacing * i) - 10, d3.extent(axesScales[d.name].range())[0]],
 							[(margin.left + axisSpacing * i) + 10, d3.extent(axesScales[d.name].range())[1]]
 						])(d3.select(nodes[i]));
+
+						if (_this.filters[d.name]) {
+							brush.call(d3.event.target.move, _this.filters[d.name]);
+						}
 				});
 		}
 
