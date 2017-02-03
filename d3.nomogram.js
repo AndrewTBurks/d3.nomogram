@@ -434,7 +434,7 @@ Nomogram.prototype.draw = function() {
 		.style("stroke", _this.colorFunc)
 		.style("stroke-width", _this.strokeSize)
 		.style("stroke-opacity", (d) => {
-			return filterDataByDomains(d) ? _this.defaultOpacity : _this.filteredItemOpacity;
+			return _this.dataFilteringFunction(d) ? _this.defaultOpacity : _this.filteredItemOpacity;
 		})
 		.style("fill", "none");
 
