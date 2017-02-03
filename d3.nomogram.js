@@ -333,7 +333,7 @@ Nomogram.prototype.draw = function() {
 				.data(axesSpec).enter()
 			.append("g")
 				.attr("class", "brush")
-				.each(function (d) {
+				.each(function (d, i) {
 					let brush = d3.brushY()
 						.on("brush", brushed)
 						.on("end", brushended)
