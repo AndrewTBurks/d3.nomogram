@@ -347,7 +347,6 @@ Nomogram.prototype.draw = function() {
 						g.call(brush);
 
 						if (_this.filters[d.name]) {
-							console.log(_this.filters[d.name]);
 
 							g.call(brush.move, _this.filters[d.name]);
 						}
