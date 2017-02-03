@@ -333,7 +333,7 @@ Nomogram.prototype.draw = function() {
 				.data(axesSpec).enter()
 			.append("g")
 				.attr("class", "brush")
-				.each((d, i, nodes) => {
+				.each(function (d) {
 					let brush = d3.brushY()
 						.on("brush", brushed)
 						.on("end", brushended)
@@ -342,12 +342,14 @@ Nomogram.prototype.draw = function() {
 							[(margin.left + axisSpacing * i) + 10, d3.extent(axesScales[d.name].range())[1]]
 						]);
 
-						brush(d3.select(nodes[i]));
+						var g = d3.select(this);
+
+						g.call(brush);
 
 						if (_this.filters[d.name]) {
-							console.log(brush, _this.filters[d.name]);
+							console.log(_this.filters[d.name]);
 
-							brush.move(d3.select(nodes[i]), _this.filters[d.name]);
+							g.call(brush.move, _this.filters[d.name]);
 						}
 				});
 		}
@@ -431,7 +433,9 @@ Nomogram.prototype.draw = function() {
 		})
 		.style("stroke", _this.colorFunc)
 		.style("stroke-width", _this.strokeSize)
-		.style("stroke-opacity", _this.defaultOpacity)
+		.style("stroke-opacity", (d) => {
+			return filterDataByDomains(d) ? _this.defaultOpacity : _this.filteredItemOpacity;
+		})
 		.style("fill", "none");
 
 		// enter
