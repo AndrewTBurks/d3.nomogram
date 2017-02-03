@@ -340,7 +340,9 @@ Nomogram.prototype.draw = function() {
 						.extent([
 							[(margin.left + axisSpacing * i) - 10, d3.extent(axesScales[d.name].range())[0]],
 							[(margin.left + axisSpacing * i) + 10, d3.extent(axesScales[d.name].range())[1]]
-						])(d3.select(nodes[i]));
+						]);
+
+						brush(d3.select(nodes[i]));
 
 						if (_this.filters[d.name]) {
 							console.log(_this.filters[d.name]);
