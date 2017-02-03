@@ -343,6 +343,8 @@ Nomogram.prototype.draw = function() {
 						])(d3.select(nodes[i]));
 
 						if (_this.filters[d.name]) {
+							console.log(_this.filters[d.name]);
+
 							brush.call(d3.event.target.move, _this.filters[d.name]);
 						}
 				});
