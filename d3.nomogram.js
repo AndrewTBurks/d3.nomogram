@@ -31,6 +31,7 @@ function Nomogram() {
 
 	this.isBrushable = false;
 	this.filters = {}; // filters used if brushing is enabled
+	this.filtersPercent = {};
 	this.dataFilteringFunction = null;
 
 	this.filteredItemOpacity = 0.1;
@@ -347,16 +348,32 @@ Nomogram.prototype.draw = function() {
 						g.call(brush);
 
 						if (_this.filters[d.name]) {
+							let axisLength = axesScales[d.name].range()[1] - axesScales[d.name].range()[0];
 
-							g.call(brush.move, _this.filters[d.name]);
+							let newBrushRange = [
+								(_this.filtersPercent[d.name][0] * axisLength) + axesScales[d.name].range()[0],
+								(_this.filtersPercent[d.name][1] * axisLength) + axesScales[d.name].range()[0]
+							];
+
+							console.log();
+
+							// g.call(brush.move, _this.filters[d.name]);
+							g.call(brush.move, newBrushRange);
 						}
 				});
 		}
 
 		function brushed(d) {
 			let extent = d3.event.selection;
+			let axisLength = axesScales[d.name].range()[1] - axesScales[d.name].range()[0];
+
+			let extentPercent = [
+				(extent[0] - axesScales[d.name].range()[0]) / axisLength,
+				(extent[1] - axesScales[d.name].range()[0]) / axisLength
+			];
 
 			_this.filters[d.name] = extent;
+			_this.filtersPercent[d.name] = extentPercent;
 
 			_this.lines.selectAll(".dataPath")
 				.style("stroke-opacity", (d) => {
@@ -368,6 +385,7 @@ Nomogram.prototype.draw = function() {
 			if (!d3.event.selection) {
 				// clear this filter
 				delete _this.filters[d.name];
+				delete _this.filtersPercent[d.name];
 
 				_this.lines.selectAll(".dataPath")
 					.style("stroke-opacity", (d) => {
