@@ -174,8 +174,9 @@ Nomogram.prototype.draw = function() {
 			}
 
 			props.forEach(key => {
-				if (allValuesSame(this.plotData.map((d) => d[key])) &&
-					!this.plotAxes[this.plotAxes.findIndex(a => a.name === key)]) {
+				if ((allValuesSame(this.plotData.map((d) => d[key])) &&
+					!axesSpec[axesSpec.findIndex(a => a.name === key)]) ||
+					axesSpec[axesSpec.findIndex(a => a.name === key)].domain.length === 1) {
 					let index = axesSpec.findIndex((el) => {
 						return el.name === key;
 					});
@@ -233,7 +234,6 @@ Nomogram.prototype.draw = function() {
 				let newDomainStart = el.domain[0] - (domainSize * el.rangeShrink[0]);
 
 				let axisHeight = height - margin.bottom - margin.top;
-
 
 				scale = d3.scaleLinear();
 
@@ -296,8 +296,8 @@ Nomogram.prototype.draw = function() {
 			.attr("transform", (d, i) => {
 				return "translate(" + (margin.left + axisSpacing * i) + ", 0)";
 			})
-			.each((d, i, nodes) => {
-				d.axisCall(d3.select(nodes[i]));
+			.each(function(d) {
+				d.axisCall(d3.select(this));
 			})
 		.selectAll("text")
 			.style("font-size", _this.axisTickFontSize);
@@ -354,8 +354,6 @@ Nomogram.prototype.draw = function() {
 								(_this.filtersPercent[d.name][0] * axisLength) + axesScales[d.name].range()[0],
 								(_this.filtersPercent[d.name][1] * axisLength) + axesScales[d.name].range()[0]
 							];
-
-							console.log();
 
 							// g.call(brush.move, _this.filters[d.name]);
 							g.call(brush.move, newBrushRange);
@@ -546,9 +544,9 @@ Nomogram.prototype.setAxes = function(axes, axesMode, shrinkMode) {
 	let newFilters = {};
 
 	if (this.plotAxes) {
-		for (let axis of Object.keys(this.plotAxes)) {
-			if (this.filters[axis]) {
-				newFilters[axis] = this.filters[axis];
+		for (let axis of this.plotAxes) {
+			if (this.filters[axis.name]) {
+				newFilters[axis.name] = this.filters[axis.name];
 			}
 		}
 	}
