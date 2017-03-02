@@ -547,7 +547,9 @@ Nomogram.prototype.setAxes = function(axes, axesMode, shrinkMode) {
 
 	if (this.plotAxes) {
 		for (let axis of Object.keys(this.plotAxes)) {
-			newFilters[axis] = this.filters[axis];
+			if (this.filters[axis]) {
+				newFilters[axis] = this.filters[axis];
+			}
 		}
 	}
 
