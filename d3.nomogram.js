@@ -542,6 +542,17 @@ Nomogram.prototype.setAxes = function(axes, axesMode, shrinkMode) {
 
 	this.plotAxes = axes || null;
 
+	// delete filters which aren't in the set of axes
+	let newFilters = {};
+
+	if (this.plotAxes) {
+		for (let axis of Object.keys(this.plotAxes)) {
+			newFilters[axis] = this.filters[axis];
+		}
+	}
+
+	this.filters = newFilters;
+
 	// "alter" changes specified axes, "reduce" only draws specified axes
 	this.customAxesMode = axesMode || "reduce";
 	this.rangeShrinkMode = shrinkMode || "shrinkAxis";
