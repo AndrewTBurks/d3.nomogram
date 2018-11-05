@@ -29,7 +29,7 @@ let myData = [
 	{
 		Thing1: 8,
 		Thing2: "2",
-		Word1: "Chihua",
+		Word1: "word",
 		Thing3: 5
 	}
 ];
@@ -59,9 +59,10 @@ myNomogram
 	.setAxes([
 		{
 			name: "Thing1",
-			// label: "Custom Label",
+			label: "Label",
+			rangeShrink: [0, 0.5],
+			tickValues: [1, 10],
 			// domain: [2, 5]
-			rangeShrink: [0, 0.5]
 		},
 		{
 			name: "Thing2",

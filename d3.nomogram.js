@@ -127,6 +127,7 @@ Nomogram.prototype.draw = function() {
 				obj.domain = el.domain || calculateAxisExtent(this.plotData.map(el => el[obj.name]), obj.type);
 				// range used to shrink ordinal scales to be smaller than the
 				obj.rangeShrink = el.rangeShrink || [0, 1];
+				obj.tickValues = el.tickValues || null;
 
 				if (allValuesSame(this.plotData.map(d => d[obj.name])) && !el.domain) {
 					if (obj.type === "linear") {
@@ -168,6 +169,7 @@ Nomogram.prototype.draw = function() {
 							calculateAxisExtent(this.plotData.map(el => el[axesSpec[index].name]), axesSpec[index].type); // default value
 						// range used to shrink ordinal scales to be smaller than the
 						axesSpec[index].rangeShrink = el.rangeShrink || [0, 1];
+						axesSpec[index].tickValues = el.tickValues || null;
 
 					}
 				});
@@ -249,8 +251,13 @@ Nomogram.prototype.draw = function() {
 				}
 
 
-				el.axisCall = d3.axisLeft(scale)
-					.ticks(10);
+				el.axisCall = d3.axisLeft(scale);
+
+				if (el.tickValues) {
+					el.axisCall.tickValues(el.tickValues);
+				} else {
+					el.axisCall.ticks(10);
+				}
 
 			} else if (el.type === "ordinal") {
 				let start = (height - margin.bottom) - (height - margin.bottom - margin.top) * (el.rangeShrink[0] - 0);
@@ -279,6 +286,11 @@ Nomogram.prototype.draw = function() {
 					.range(range);
 
 				el.axisCall = d3.axisLeft(scale);
+
+				// support tickValues specification
+				if (el.tickValues) {
+					el.axisCall.tickValues(el.tickValues);
+				}
 					// .ticks(el.domain.length);
 			}
 
@@ -538,7 +550,10 @@ Nomogram.prototype.setAxes = function(axes, axesMode, shrinkMode) {
 		}
 	*/
 
+	
 	this.plotAxes = axes || null;
+	
+	console.log(axes, this.plotAxes);
 
 	// delete filters which aren't in the set of axes
 	let newFilters = {};
