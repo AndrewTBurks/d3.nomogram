@@ -552,8 +552,6 @@ Nomogram.prototype.setAxes = function(axes, axesMode, shrinkMode) {
 
 	
 	this.plotAxes = axes || null;
-	
-	console.log(axes, this.plotAxes);
 
 	// delete filters which aren't in the set of axes
 	let newFilters = {};
